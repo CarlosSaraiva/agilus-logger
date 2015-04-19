@@ -1,0 +1,16 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "router.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mssql": "^2.1.2",
+    "nexe": "^0.3.7",
+    "node-simple-router": "^0.9.4-2"
+  }
+}
