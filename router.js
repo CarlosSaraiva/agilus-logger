@@ -24,15 +24,14 @@ var connectionString = {
 //Inicio server
 server.listen(1330, function () {
     log.info('Server started listening at port 1330');
-    console.log('Server listening at 1330');
 });
 
 //Rotes
-router.post("/insert", function(request, response) {
+router.post("/insert", function (request, response) {
     var query = queryString(request);
     database(query, function(result) {
-        console.log(result);
-        response.end(JSON.stringify(result));
+        log.info(JSON.stringify(request.headers));
+        response.end(result);
     });
 });
 
@@ -52,13 +51,16 @@ function database(query, callback) {
             var request = new sql.Request(connection);
             request.query(query, function(err) {
                 if (!err) {
+                    connection.close();
                     callback('Done');
                 } else {
+                    connection.close();
                     log.error(err);
                     callback(err);
                 }
             });
         } else {
+            connection.close();
             log.error(err);
             callback(err);
         }

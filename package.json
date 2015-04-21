@@ -1,16 +1,18 @@
 {
-  "name": "router",
+  "name": "VCON-Logger",
   "version": "1.0.0",
   "description": "",
   "main": "router.js",
+  "dependencies": {
+    "node-windows": "^0.1.7",
+    "mssql": "^2.1.2",
+    "node-simple-router": "^0.9.4-2",
+    "path": "^0.11.14"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "mssql": "^2.1.2",
-    "nexe": "^0.3.7",
-    "node-simple-router": "^0.9.4-2"
-  }
+  "author": "Carlos Saraiva",
+  "license": "ISC"
 }
