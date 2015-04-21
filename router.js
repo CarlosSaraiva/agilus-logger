@@ -1,75 +1,66 @@
-/*jslint node: true*/
+//Importando módulos
 var http = require('http');
 var Router = require('node-simple-router');
 var sql = require("mssql");
+var fs = require("fs");
+var path = require('path');
+var EventLogger = require('node-windows').EventLogger;
 
-var router = Router();
-var connectionString = "";
-var result = "";
+//Instanciando objetos
+var router = new Router();
+var server = http.createServer(router);
+var log = new EventLogger('Test');
 
-//Configurando conexao SQL
-var configSql = {
-    user: 'Claudio',
-    password: 'afc@55216',
-    server: 'servagilus.dyndns.org',
-    database: 'dbDemo'
+//Leitura arquivo de configuração
+var file = fs.readFileSync(path.join(__dirname, 'sql.udl'), 'ucs2').split(';');
+var connectionString = {
+    user: file[4].split('=')[1],
+    password: file[2].split('=')[1],
+    server: file[6].split('=')[1].replace('\n', '').replace('\r', ''),
+    database: file[5].split('=')[1],
+    appName: 'test'
 };
 
-//Query
-
-
-//routes
-router.get("/hello", function(request, response) {
-    response.end("Hello");
+//Inicio server
+server.listen(1330, function () {
+    log.info('Server started listening at port 1330');
+    console.log('Server listening at 1330');
 });
 
-router.post("/search", function(request, response) {
-    var query = "select * from ligacao_telefonica"; //where clt_nome like " + "'" + request.post.nome + "'";
-    var connection = new sql.Connection(configSql, function(err) {
-        var request = new sql.Request(connection);
-        request.query(query, function(err, recordset) {
-            response.end(JSON.stringify(recordset));
-        });
-    });
-});
-
+//Rotes
 router.post("/insert", function(request, response) {
-    var query = "insert into ligacao_telefonica values(" +
-        "'" + request.post.nome + "'," +
-        "'" + request.post.calldate + "'," +
-        request.post.src + "," +
-        request.post.dst + "," +
-        request.post.duration + "," +
-        request.post.billsec + "," +
-        "'" + request.post.disposition + "', " +
-        "'" + request.post.userfield + "'," +
-        "'" + request.post.callid + "')";
-
+    var query = queryString(request);
     database(query, function(result) {
         console.log(result);
         response.end(JSON.stringify(result));
     });
 });
 
-function database(query, callback) {
-    var connection = new sql.Connection(configSql, function(err) {
-        var transaction = new sql.Transaction(connection);
-
-        transaction.begin(function(err) {
-            var request = new sql.Request(transaction);
-            request.query(query).then(function(result) {
-                transaction.commit();
-                callback('Done');
-            }).catch(function(err) {
-                callback(err);
-            });
-
-        });
-    });
+//Funções auxiliares
+function queryString(request) {
+    var param = [];
+    for (var item in request.post) {
+        if (request.post[item] !== undefined) param.push("'" + request.post[item] + "'");
+        else param.push();
+    }
+    return "insert into ligacao_telefonica values(" + param + ")";
 }
 
-//Inicializando server
-var server = http.createServer(router);
-server.listen(1330, function() {
-    console.log("The service it's on at port 1330");
-});
+function database(query, callback) {
+    var connection = new sql.Connection(connectionString, function(err) {
+        if (!err) {
+            var request = new sql.Request(connection);
+            request.query(query, function(err) {
+                if (!err) {
+                    callback('Done');
+                } else {
+                    log.error(err);
+                    callback(err);
+                }
+            });
+        } else {
+            log.error(err);
+            callback(err);
+        }
+    });
+}
