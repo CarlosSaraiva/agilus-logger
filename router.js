@@ -51,16 +51,14 @@ function database(query, callback) {
             var request = new sql.Request(connection);
             request.query(query, function(err) {
                 if (!err) {
-                    connection.close();
                     callback('Done');
                 } else {
-                    connection.close();
                     log.error(err);
                     callback(err);
                 }
+                connection.close();
             });
         } else {
-            connection.close();
             log.error(err);
             callback(err);
         }

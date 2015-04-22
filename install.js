@@ -12,8 +12,8 @@ wincmd.isAdminUser(function (isAdmin){
 
 // Create a new service object
 var svc = new Service({
-  name:'VCON Logger',
-  description: 'Agilus Middleware',
+  name:'Logger',
+  description: '',
   script: require('path').join(__dirname,'router.js'),
   env:{
     name: "NODE_ENV",
