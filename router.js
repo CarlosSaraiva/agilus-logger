@@ -18,7 +18,7 @@ var connectionString = {
     password: file[2].split('=')[1],
     server: file[6].split('=')[1].replace('\n', '').replace('\r', ''),
     database: file[5].split('=')[1],
-    appName: 'test'
+    appName: 'Logger'
 };
 
 //Inicio server
