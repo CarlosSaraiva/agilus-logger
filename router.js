@@ -1,36 +1,43 @@
 //Importando módulos
-var http = require('http');
-var Router = require('node-simple-router');
+var http = require("http");
+var Router = require("node-simple-router");
 var sql = require("mssql");
 var fs = require("fs");
-var path = require('path');
-var EventLogger = require('node-windows').EventLogger;
+var path = require("path");
+var EventLogger = require("node-windows").EventLogger;
 
 //Instanciando objetos
 var router = new Router();
 var server = http.createServer(router);
 var log = new EventLogger('Test');
+var litTabelaString = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
+var connectionString;
 
-//Leitura arquivo de configuração
-var file = fs.readFileSync(path.join(__dirname, 'sql.udl'), 'ucs2').split(';');
-var connectionString = {
-    user: file[4].split('=')[1],
-    password: file[2].split('=')[1],
-    server: file[6].split('=')[1].replace('\n', '').replace('\r', ''),
-    database: file[5].split('=')[1],
-    appName: 'Logger'
-};
+//Leitura do arquivo de configuração e Inicio do server
+var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileError, data) {
+    if (fileError) {
+        console.log("Problemas com arquivo de configuração. Server não iniciado.");
+    } else {
+        var parameters = data.split(";");
+        connectionString = {
+            user: parameters[4].split("=")[1],
+            password: parameters[2].split("=")[1],
+            server: parameters[6].split("=")[1].replace("\n", "").replace("\r", ""),
+            database: parameters[5].split("=")[1],
+            appName: "Logger"
+        };
 
-//Inicio server
-server.listen(1330, function () {
-    log.info('Server started listening at port 1330');
+        //Inicio do server
+        server.listen(1330, function() {
+            log.info("Server iniciado na porta 1330");
+        });
+    }
 });
 
 //Rotes
-router.post("/insert", function (request, response) {
+router.post("/insert", function(request, response) {
     var query = queryString(request);
     database(query, function(result) {
-        log.info(JSON.stringify(request.headers));
         response.end(result);
     });
 });
@@ -42,25 +49,25 @@ function queryString(request) {
         if (request.post[item] !== undefined) param.push("'" + request.post[item] + "'");
         else param.push();
     }
-    return "insert into ligacao_telefonica values(" + param + ")";
+    return litTabelaString + "values(" + param + ")";
 }
 
 function database(query, callback) {
-    var connection = new sql.Connection(connectionString, function(err) {
-        if (!err) {
+    var connection = new sql.Connection(connectionString, function(connectionError) {
+        if (!connectionError) {
             var request = new sql.Request(connection);
-            request.query(query, function(err) {
-                if (!err) {
-                    callback('Done');
+            request.query(query, function(queryError) {
+                if (!queryError) {
+                    callback("Ok");
                 } else {
-                    log.error(err);
-                    callback(err);
+                    log.error(JSON.stringify(queryError));
+                    callback(JSON.stringify(queryError));
                 }
                 connection.close();
             });
         } else {
-            log.error(err);
-            callback(err);
+            log.error(JSON.stringify(connectionError));
+            callback(JSON.stringify(connectionError));
         }
     });
 }
