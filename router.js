@@ -4,18 +4,18 @@ var Router = require("node-simple-router");
 var sql = require("mssql");
 var fs = require("fs");
 var path = require("path");
+var color = require("colors");
 
 //Instanciando objetos
 var router = new Router();
 var server = http.createServer(router);
-var log = new EventLogger('Test');
 var litTabelaString = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString;
 
 //Leitura do arquivo de configuração e Inicio do server
 var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileError, data) {
     if (fileError) {
-        console.log("Problemas com arquivo de configuração. Server não iniciado.");
+        console.log("Problemas com arquivo de configuração. Server não iniciado.".blue);
         process.exit();
     } else {
         var parameters = data.split(";");
@@ -29,7 +29,7 @@ var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileErr
 
         //Inicio do server
         server.listen(1330, function() {
-            console.log('Servidor disponivel na porta 1330.');
+            console.log('Servidor disponivel na porta:' + ' 1330'.green);
         });
     }
 });
