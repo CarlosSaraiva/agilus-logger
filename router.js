@@ -4,7 +4,6 @@ var Router = require("node-simple-router");
 var sql = require("mssql");
 var fs = require("fs");
 var path = require("path");
-var EventLogger = require("node-windows").EventLogger;
 
 //Instanciando objetos
 var router = new Router();
@@ -17,6 +16,7 @@ var connectionString;
 var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileError, data) {
     if (fileError) {
         console.log("Problemas com arquivo de configuração. Server não iniciado.");
+        process.exit();
     } else {
         var parameters = data.split(";");
         connectionString = {
@@ -29,7 +29,7 @@ var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileErr
 
         //Inicio do server
         server.listen(1330, function() {
-            log.info("Server iniciado na porta 1330");
+            console.log('Servidor disponivel na porta 1330.');
         });
     }
 });
@@ -60,13 +60,13 @@ function database(query, callback) {
                 if (!queryError) {
                     callback("Ok");
                 } else {
-                    log.error(JSON.stringify(queryError));
+                    console.error(JSON.stringify(queryError));
                     callback(JSON.stringify(queryError));
                 }
                 connection.close();
             });
         } else {
-            log.error(JSON.stringify(connectionError));
+            console.error(JSON.stringify(connectionError));
             callback(JSON.stringify(connectionError));
         }
     });
