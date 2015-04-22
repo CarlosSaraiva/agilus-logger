@@ -8,7 +8,6 @@ var path = require("path");
 //Instanciando objetos
 var router = new Router();
 var server = http.createServer(router);
-var log = new EventLogger('Test');
 var litTabelaString = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString;
 
