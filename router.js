@@ -4,6 +4,7 @@ var Router = require("node-simple-router");
 var sql = require("mssql");
 var fs = require("fs");
 var path = require("path");
+var color = require("colors");
 
 //Instanciando objetos
 var router = new Router();
@@ -29,7 +30,7 @@ var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileErr
 
         //Inicio do server
         server.listen(1330, function() {
-            console.log('Servidor disponivel na porta 1330.');
+            console.log('Servidor disponivel na porta:' + ' 1330'.red);
         });
     }
 });
