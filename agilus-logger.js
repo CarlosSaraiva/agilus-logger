@@ -37,6 +37,7 @@ function readUDL(file, callback) {
             });
         } else {
             var udl = JSON.parse(UDLtoJSON(data));
+            console.log(udl);
             connectionString = {
                 user: udl.UserID !== undefined ? udl.UserID : "",
                 password: udl.Password !== undefined ? udl.Password : "",
