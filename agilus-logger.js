@@ -36,7 +36,6 @@ function readUDL(file, callback) {
             process.exit(1);
         } else {
             var udl = JSON.parse(UDLtoJSON(data));
-            console.log(udl);
             connectionString = {
                 user: udl.UserID !== undefined ? udl.UserID : "",
                 password: udl.Password !== undefined ? udl.Password : "",
@@ -70,6 +69,7 @@ function database(query, callback) {
             var request = new sql.Request(connection);
             request.query(query, function (queryError) {
                 if (!queryError) {
+                    console.log("Query executado no sistema: " + query);
                     callback("Ok");
                 } else {
                     console.error(queryError.name + ": " + queryError.message);
