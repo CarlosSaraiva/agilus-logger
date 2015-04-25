@@ -21,8 +21,12 @@
   },
   "homepage": "https://github.com/CarlosSaraiva/agilus-logger",
   "dependencies": {
+<<<<<<< HEAD
     "fs": "0.0.2",
     "http": "0.0.0",
+=======
+    "colors": "^1.0.3",
+>>>>>>> 4aa2057b2a127ccc7a40b1dadfdc4c948302b957
     "mssql": "^2.1.2",
     "node-simple-router": "^0.9.4-2",
     "node-windows": "^0.1.7",
