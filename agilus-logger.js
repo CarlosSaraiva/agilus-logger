@@ -27,7 +27,7 @@ router.post("/insert", function (request, response) {
 });
 
 router.get("/", function (request, response) {
-    response.end("ok");
+    response.end("okey dokey");
 });
 
 //Funções auxiliares
