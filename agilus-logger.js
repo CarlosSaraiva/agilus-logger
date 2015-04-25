@@ -10,11 +10,12 @@ var router = new Router();
 var server = http.createServer(router);
 var tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString, connectionErrorFlag;
+var port = process.env.PORT || '3000';
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(process.env.PORT || 1330, "0.0.0.0", function () {
-        console.log("Server iniciado na porta 1330");
+    server.listen(port, "0.0.0.0", function () {
+        console.log("Server iniciado na porta: " + process.env.PORT);
     });
 });
 
@@ -35,10 +36,8 @@ router.get("/", function (request, response) {
 function readUDL(file, callback) {
     var f = fs.readFile(path.join(__dirname, file), "ucs2", function (fileError, data) {
         if (fileError) {
-            console.log("Arquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.");
-            console.error("Arquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.", 1000, function () {
-                process.exit(1);
-            });
+            console.error("Arquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.");
+            process.exit(1);
         } else {
             var udl = JSON.parse(UDLtoJSON(data));
             console.log(udl);
@@ -77,13 +76,13 @@ function database(query, callback) {
                 if (!queryError) {
                     callback("Ok");
                 } else {
-                    console.error(queryError.name + ": " + queryError.message, 1000);
+                    console.error(queryError.name + ": " + queryError.message);
                     callback(queryError);
                 }
                 connection.close();
             });
         } else {
-            console.error(connectionError.name + ": " + connectionError.message, 1000);
+            console.error(connectionError.name + ": " + connectionError.message);
             callback(connectionError);
         }
     });
