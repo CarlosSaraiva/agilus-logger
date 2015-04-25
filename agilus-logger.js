@@ -14,7 +14,7 @@ var connectionString, connectionErrorFlag;
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
     server.listen(1330, "0.0.0.0", function () {
-        console.info("Server iniciado na porta 1330");
+        console.log("Server iniciado na porta 1330");
     });
 });
 
@@ -24,6 +24,10 @@ router.post("/insert", function (request, response) {
     database(query, function (result) {
         response.end(JSON.stringify(result));
     });
+});
+
+router.get("/", function (request, response) {
+    response.end("ok");
 });
 
 //Funções auxiliares
