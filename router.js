@@ -22,12 +22,11 @@ var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function (fileEr
         });
     } else {
         var udl = JSON.parse(UDLtoJSON(data));
-
         connectionString = {
-            user: udl.UserID,
-            password: udl.Password,
-            server: udl.DataSource,
-            database: udl.InitialCatalog,
+            user: udl.UserID !== undefined ? udl.UserID : "",
+            password: udl.Password !== undefined ? udl.Password : "",
+            server: udl.DataSource !== undefined ? udl.DataSource : "",
+            database: udl.InitialCatalog !== undefined ? udl.InitialCatalog : "",
             appName: "Logger"
         };
         //Inicio do server
@@ -48,12 +47,15 @@ router.post("/insert", function (request, response) {
 //Funções auxiliares
 //Monta a string do insert que sera executado no banco de dados
 function queryString(request) {
-    var param = [];
-    for (var item in request.post) {
-        if (request.post[item] !== undefined) param.push("'" + request.post[item] + "'");
-        else param.push();
-    }
-    return litTabelaString + "values(" + param + ")";
+    return "'" + request.post.nome + "'," +
+        "'" + request.post.calldate + "," +
+        "'" + request.post.src + "," +
+        "'" + request.post.dst + "," +
+        "'" + request.post.duration + "," +
+        "'" + request.post.billsec + "," +
+        "'" + request.post.disposition + "," +
+        "'" + request.post.userfield + "," +
+        "'" + request.post.callid;
 }
 
 //Função responsavel por conectar no banco de dados e fazer a inserção
@@ -85,7 +87,8 @@ function UDLtoJSON(data) {
     var udl = '';
     for (item in data) {
         var prop = data[item].replace(/[|]|\n|\r| | [oledb]/g, '').split("=");
-        udl += prop.length > 1 ? '"' + prop[0] + '"' + ': ' + '"' + prop[1] + '"' + ',' : "";
+        udl += prop.length > 1 ? '"' + prop[0] + '"' + ': ' + '"' + prop[1] + '"' + ',' : '"' + prop[0] + '"' + ': ' + '"' + '' + '"' + ',';
     }
+    console.log(udl);
     return "{" + udl.slice(0, udl.length - 1) + "}";
 }
