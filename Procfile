@@ -1,1 +1,1 @@
-web:node agilus-logger.js
+web: node agilus-logger.js
