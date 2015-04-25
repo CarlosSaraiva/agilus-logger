@@ -14,23 +14,22 @@ var litTabelaString = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit
 var connectionString;
 
 //Leitura do arquivo de configuração e Inicio do server
-var file = fs.readFile(path.join(__dirname, "sql1.udl"), "ucs2", function (fileError, data) {
+var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function (fileError, data) {
     if (fileError) {
-        console.log("Arvquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.");
+        console.log("Arquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.");
         log.error("Arquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.", 1000, function () {
             process.exit(1);
         });
-
     } else {
-        var parameters = data.split(";");
+        var udl = JSON.parse(UDLtoJSON(data));
+
         connectionString = {
-            user: parameters[4].split("=")[1],
-            password: parameters[2].split("=")[1],
-            server: parameters[6].split("=")[1].replace("\n", "").replace("\r", ""),
-            database: parameters[5].split("=")[1],
+            user: udl.UserID,
+            password: udl.Password,
+            server: udl.DataSource,
+            database: udl.InitialCatalog,
             appName: "Logger"
         };
-
         //Inicio do server
         server.listen(1330, function () {
             log.info("Server iniciado na porta 1330");
@@ -47,6 +46,7 @@ router.post("/insert", function (request, response) {
 });
 
 //Funções auxiliares
+//Monta a string do insert que sera executado no banco de dados
 function queryString(request) {
     var param = [];
     for (var item in request.post) {
@@ -56,6 +56,7 @@ function queryString(request) {
     return litTabelaString + "values(" + param + ")";
 }
 
+//Função responsavel por conectar no banco de dados e fazer a inserção
 function database(query, callback) {
     var connection = new sql.Connection(connectionString, function (connectionError) {
         if (!connectionError) {
@@ -76,4 +77,15 @@ function database(query, callback) {
             callback(connectionError);
         }
     });
+}
+
+//Função que converte arquivos udl para o formato json
+function UDLtoJSON(data) {
+    var data = data.split(";")
+    var udl = '';
+    for (item in data) {
+        var prop = data[item].replace(/[|]|\n|\r| | [oledb]/g, '').split("=");
+        udl += prop.length > 1 ? '"' + prop[0] + '"' + ': ' + '"' + prop[1] + '"' + ',' : "";
+    }
+    return "{" + udl.slice(0, udl.length - 1) + "}";
 }
