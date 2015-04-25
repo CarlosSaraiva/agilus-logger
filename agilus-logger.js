@@ -83,6 +83,7 @@ function database(query, callback) {
             });
         } else {
             console.error(connectionError.name + ": " + connectionError.message);
+            console.error("Query executado no sistema: " + query);
             callback(connectionError);
         }
     });
