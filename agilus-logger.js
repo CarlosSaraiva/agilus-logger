@@ -13,7 +13,7 @@ var connectionString, connectionErrorFlag;
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(1330, function () {
+    server.listen(1330, "0.0.0.0", function () {
         console.info("Server iniciado na porta 1330");
     });
 });
