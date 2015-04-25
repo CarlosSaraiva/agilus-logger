@@ -1,35 +1,31 @@
 {
-  "name": "agilus-logger",
-  "version": "1.0.0",
-  "description": "",
-  "main": "agilus-logger.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CarlosSaraiva/agilus-logger"
-  },
-  "keywords": [
-    "agilus",
-    "node"
-  ],
-  "author": "Carlos Saraiva <carlos.saraiva@msn.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/CarlosSaraiva/agilus-logger/issues"
-  },
-  "homepage": "https://github.com/CarlosSaraiva/agilus-logger",
-  "dependencies": {
-<<<<<<< HEAD
-    "fs": "0.0.2",
-    "http": "0.0.0",
-=======
-    "colors": "^1.0.3",
->>>>>>> 4aa2057b2a127ccc7a40b1dadfdc4c948302b957
-    "mssql": "^2.1.2",
-    "node-simple-router": "^0.9.4-2",
-    "node-windows": "^0.1.7",
-    "path": "^0.11.14"
-  }
+    "name": "agilus-logger",
+    "version": "1.0.0",
+    "description": "",
+    "main": "agilus-logger.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CarlosSaraiva/agilus-logger"
+    },
+    "keywords": [
+        "agilus",
+        "node"
+    ],
+    "author": "Carlos Saraiva <carlos.saraiva@msn.com>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/CarlosSaraiva/agilus-logger/issues"
+    },
+    "homepage": "https://github.com/CarlosSaraiva/agilus-logger",
+    "dependencies": {
+        "fs": "0.0.2",
+        "http": "0.0.0",
+        "mssql": "^2.1.2",
+        "node-simple-router": "^0.9.4-2",
+        "node-windows": "^0.1.7",
+        "path": "^0.11.14"
+    }
 }
