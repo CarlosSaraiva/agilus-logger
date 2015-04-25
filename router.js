@@ -9,14 +9,18 @@ var EventLogger = require("node-windows").EventLogger;
 //Instanciando objetos
 var router = new Router();
 var server = http.createServer(router);
-var log = new EventLogger('Test');
+var log = new EventLogger('Logger');
 var litTabelaString = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString;
 
 //Leitura do arquivo de configuração e Inicio do server
-var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileError, data) {
+var file = fs.readFile(path.join(__dirname, "sql1.udl"), "ucs2", function (fileError, data) {
     if (fileError) {
-        console.log("Problemas com arquivo de configuração. Server não iniciado.");
+        console.log("Arvquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.");
+        log.error("Arquivo de configuração não encontrado ou corrompido. Server não pode ser iniciado.", 1000, function () {
+            process.exit(1);
+        });
+
     } else {
         var parameters = data.split(";");
         connectionString = {
@@ -28,17 +32,17 @@ var file = fs.readFile(path.join(__dirname, "sql.udl"), "ucs2", function(fileErr
         };
 
         //Inicio do server
-        server.listen(1330, function() {
+        server.listen(1330, function () {
             log.info("Server iniciado na porta 1330");
         });
     }
 });
 
 //Rotes
-router.post("/insert", function(request, response) {
+router.post("/insert", function (request, response) {
     var query = queryString(request);
-    database(query, function(result) {
-        response.end(result);
+    database(query, function (result) {
+        response.end(JSON.stringify(result));
     });
 });
 
@@ -53,21 +57,23 @@ function queryString(request) {
 }
 
 function database(query, callback) {
-    var connection = new sql.Connection(connectionString, function(connectionError) {
+    var connection = new sql.Connection(connectionString, function (connectionError) {
         if (!connectionError) {
             var request = new sql.Request(connection);
-            request.query(query, function(queryError) {
+            request.query(query, function (queryError) {
                 if (!queryError) {
                     callback("Ok");
                 } else {
-                    log.error(JSON.stringify(queryError));
-                    callback(JSON.stringify(queryError));
+                    console.log(queryError.name + ": " + queryError.message);
+                    log.error(queryError.name + ": " + queryError.message, 1000);
+                    callback(queryError);
                 }
                 connection.close();
             });
         } else {
-            log.error(JSON.stringify(connectionError));
-            callback(JSON.stringify(connectionError));
+            console.log(JSON.stringify(connectionError.name + ": " + connectionError.message));
+            log.error(connectionError.name + ": " + connectionError.message, 1000);
+            callback(connectionError);
         }
     });
 }
