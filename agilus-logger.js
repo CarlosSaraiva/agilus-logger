@@ -27,6 +27,10 @@ router.post("/insert", function (request, response) {
     });
 });
 
+router.get("/loaderio-0db4c0ffb08c1db6ad98adde3b47bad9.txt", function (request, response) {
+    response.end("loaderio-0db4c0ffb08c1db6ad98adde3b47bad9");
+});
+
 //Funções auxiliares
 //Leitura do arquivo de configuração
 function readUDL(file, callback) {
