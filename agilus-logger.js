@@ -15,7 +15,7 @@ var connectionString, connectionErrorFlag;
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(1330, function () {
+    server.listen(1330, "0.0.0.0", function () {
         log.info("Server iniciado na porta 1330");
     });
 });
@@ -88,10 +88,14 @@ function database(query, callback) {
 
 //Função que converte arquivos udl para o formato json
 function UDLtoJSON(data) {
-    var data = data.split(";")
-    var udl = '';
+    "use strict";
+    data = data.split(";");
+    var udl = '',
+        item = '',
+        prop;
+
     for (item in data) {
-        var prop = data[item].replace(/[|]|\n|\r| | [oledb]/g, '').split("=");
+        prop = data[item].replace(/[|]|\n|\r| | [oledb]/g, '').split("=");
         udl += prop.length > 1 ? '"' + prop[0] + '"' + ': ' + '"' + prop[1] + '"' + ',' : '"' + prop[0] + '"' + ': ' + '"' + '' + '"' + ',';
     }
     return "{" + udl.slice(0, udl.length - 1) + "}";
