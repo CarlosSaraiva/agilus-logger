@@ -27,8 +27,8 @@ router.post("/insert", function (request, response) {
     });
 });
 
-router.get("/loaderio-f0d7632af1978f16170fae890d111b60", function (request, response) {
-    response.end("loaderio-f0d7632af1978f16170fae890d111b60");
+router.get("/loaderio-4aa3c185d4bc007fd77568275e904d13", function (request, response) {
+    response.end("loaderio-4aa3c185d4bc007fd77568275e904d13/");
 });
 
 //Funções auxiliares
