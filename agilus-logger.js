@@ -20,6 +20,12 @@ readUDL("agilus.udl", function () {
     });
 });
 
+//Caminho para a chave de verificação do Loader.io
+router.get('/loaderio-f0d7632af1978f16170fae890d111b60', function (request, response) {
+    "use strict";
+    response.end('loaderio-f0d7632af1978f16170fae890d111b60');
+});
+
 //Rotas
 router.post("/insert", function (request, response) {
     var query = insertString(request);
