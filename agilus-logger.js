@@ -28,7 +28,7 @@ router.post("/insert", function (request, response) {
 });
 
 router.get("/loaderio-4aa3c185d4bc007fd77568275e904d13", function (request, response) {
-    response.end("loaderio-4aa3c185d4bc007fd77568275e904d13/");
+    response.end("loaderio-4aa3c185d4bc007fd77568275e904d13");
 });
 
 //Funções auxiliares

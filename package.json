@@ -1,33 +1,28 @@
 {
-    "name": "agilus-logger",
-    "version": "1.0.0",
-    "description": "",
-    "main": "agilus-logger.js",
-    "scripts": {
-        "start": "node server.js"
-    },
-    "engines": {
-        "node": "0.10.x"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/CarlosSaraiva/agilus-logger"
-    },
-    "keywords": [
-        "agilus",
-        "node"
-    ],
-    "author": "Carlos Saraiva <carlos.saraiva@msn.com>",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/CarlosSaraiva/agilus-logger/issues"
-    },
-    "homepage": "https://github.com/CarlosSaraiva/agilus-logger",
-    "dependencies": {
-        "fs": "0.0.2",
-        "http": "0.0.0",
-        "mssql": "^2.1.2",
-        "node-simple-router": "^0.9.4-2",
-        "path": "^0.11.14"
-    }
+  "name": "agilus-logger",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "scripts": {
+    "pretest": "jshint ."
+  },
+  "dependencies": {
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "errorhandler": "^1.1.1",
+    "loopback": "^2.14.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-datasource-juggler": "^2.19.0",
+    "serve-favicon": "^2.0.1"
+  },
+  "optionalDependencies": {
+    "loopback-explorer": "^1.1.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.6"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "description": "agilus-logger"
 }
