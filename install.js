@@ -4,7 +4,7 @@ var wincmd = require('node-windows');
 
 // Create a new service object
 var svc = new Service({
-    name: 'VCOM Logger',
+    name: 'Agilus Logger',
     description: '',
     script: require('path').join(__dirname, 'agilus-logger.js'),
     env: {

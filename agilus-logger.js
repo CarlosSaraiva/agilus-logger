@@ -9,7 +9,7 @@ var EventLogger = require("node-windows").EventLogger;
 //Instanciando objetos
 var router = new Router();
 var server = http.createServer(router);
-var log = new EventLogger('VCOM Logger');
+var log = new EventLogger('Agilus Logger');
 var tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString, connectionErrorFlag;
 
@@ -50,7 +50,7 @@ function readUDL(file, callback) {
                 password: udl.Password !== undefined ? udl.Password : "",
                 server: udl.DataSource !== undefined ? udl.DataSource : "",
                 database: udl.InitialCatalog !== undefined ? udl.InitialCatalog : "",
-                appName: "VCOM Logger"
+                appName: "Agilus Logger"
             };
             callback();
         }
