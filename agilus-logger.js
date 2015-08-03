@@ -9,7 +9,7 @@ var EventLogger = require("node-windows").EventLogger;
 //Instanciando objetos
 var router = new Router();
 var server = http.createServer(router);
-var log = new EventLogger('Agilus Logger');
+var log = new EventLogger("Agilus Logger");
 var tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString, connectionErrorFlag;
 
@@ -21,9 +21,9 @@ readUDL("agilus.udl", function () {
 });
 
 //Caminho para a chave de verificação do Loader.io
-router.get('/loaderio-f0d7632af1978f16170fae890d111b60', function (request, response) {
+router.get("/loaderio-f0d7632af1978f16170fae890d111b60", function (request, response) {
     "use strict";
-    response.end('loaderio-f0d7632af1978f16170fae890d111b60');
+    response.end("loaderio-f0d7632af1978f16170fae890d111b60");
 });
 
 //Rotas
@@ -59,15 +59,15 @@ function readUDL(file, callback) {
 
 //Monta a string do insert que sera executado no banco de dados
 function insertString(request) {
-    var values = "'" + request.post.nome + "'," +
-        "'" + request.post.calldate + "'," +
-        "'" + request.post.src + "'," +
-        "'" + request.post.dst + "'," +
-        "'" + request.post.duration + "'," +
-        "'" + request.post.billsec + "'," +
-        "'" + request.post.disposition + "'," +
-        "'" + request.post.userfield + "'," +
-        "'" + request.post.callid + "'";
+    var values = "'" + request.body.nome + "'," +
+        "'" + request.body.calldate + "'," +
+        "'" + request.body.src + "'," +
+        "'" + request.body.dst + "'," +
+        "'" + request.body.duration + "'," +
+        "'" + request.body.billsec + "'," +
+        "'" + request.body.disposition + "'," +
+        "'" + request.body.userfield + "'," +
+        "'" + request.body.callid + "'";
     return tabela + "values(" + values + ")";
 }
 
@@ -94,15 +94,12 @@ function database(query, callback) {
 
 //Função que converte arquivos udl para o formato json
 function UDLtoJSON(data) {
-    "use strict";
-    data = data.split(";");
-    var udl = '',
-        item = '',
-        prop;
+    var udl = {};
 
-    for (item in data) {
-        prop = data[item].replace(/[|]|\n|\r| | [oledb]/g, '').split("=");
-        udl += prop.length > 1 ? '"' + prop[0] + '"' + ': ' + '"' + prop[1] + '"' + ',' : '"' + prop[0] + '"' + ': ' + '"' + '' + '"' + ',';
-    }
-    return "{" + udl.slice(0, udl.length - 1) + "}";
+    data.split(";").map(function(e) {
+        var param = e.replace(/[|]|\n|\r| | [oledb]/g, "").split("=");
+        udl[param[0]] = param.length === 2 ? param[1] : "";
+    });
+
+    return JSON.stringify(udl);
 }
