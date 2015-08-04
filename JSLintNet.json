@@ -1,0 +1,7 @@
+﻿{
+  "ignore": [
+    "\\daemon\\",
+    "\\node_modules\\",
+    "\\obj\\"
+  ]
+}
