@@ -3,28 +3,30 @@ var wincmd = require("node-windows");
 var argv = require("minimist")(process.argv.slice(2));
 
 //Variaveis do serviço
-var appName = "Logger " + argv.n,
-    port = argv.p;
+var port = argv.p,
+    name = argv.n,
+    appName = "Agilus Logger - " + name + " (porta: " + port + " )";
+
 
 // Create a new service object
 var svc = new Service({
-    name: appName,
-    description: "",
-    script: require("path").join(__dirname, "agilus-logger.js"),
+    name: "Agilus Logger - " + name + " (porta: " + port + " )",
+    description: 'Teste',
+    script: require('path').join(__dirname, 'agilus-logger.js'),
     env: [
         {
-            name: "NODE_ENV",
-            value: "production"
+            name: 'NODE_ENV',
+            value: 'production'
         },
         {
-            name: "port",
+            name: 'port',
             value: port
         },
         {
-            name: "appName",
-            value: appName
+            name: 'appName',
+            value: 'Agilus Logger - ' + name
         }
-    ]
+    ]    
 });
 
 // Listen for the "install" event, which indicates the
