@@ -2,19 +2,11 @@ var Service = require('node-windows').Service;
 var wincmd = require('node-windows');
 
 
-wincmd.isAdminUser(function (isAdmin) {
-    if (isAdmin) {
-        console.log('Usuário é Administrador!');
-    } else {
-        console.error('Usuário NÃO é Administrador!');
-    }
-});
-
 // Create a new service object
 var svc = new Service({
-    name: 'Logger',
+    name: 'Agilus Logger',
     description: '',
-    script: require('path').join(__dirname, 'router.js'),
+    script: require('path').join(__dirname, 'agilus-logger.js'),
     env: {
         name: "NODE_ENV",
         value: "production"
