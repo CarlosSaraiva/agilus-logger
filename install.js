@@ -2,9 +2,13 @@ var Service = require("node-windows").Service;
 var wincmd = require("node-windows");
 var argv = require("minimist")(process.argv.slice(2));
 
+//Variaveis do serviço
+var appName = "Logger " + argv.n,
+    port = argv.p;
+
 // Create a new service object
 var svc = new Service({
-    name: argv.e + " Logger",
+    name: appName,
     description: "",
     script: require("path").join(__dirname, "agilus-logger.js"),
     env: [
@@ -13,11 +17,14 @@ var svc = new Service({
             value: "production"
         },
         {
-            name: "p",
-            value: argv.p
+            name: "port",
+            value: port
+        },
+        {
+            name: "appName",
+            value: appName
         }
-    ],
-    exe:  "logger-" + argv.e
+    ]
 });
 
 // Listen for the "install" event, which indicates the
@@ -34,7 +41,7 @@ svc.on("alreadyinstalled", function () {
 // Listen for the "start" event and let us know when the
 // process has actually started working.
 svc.on("start", function () {
-    console.log(svc.name + " iniciado...\nServiço disponível na porta: " + argv.p + " em: " + argv.e);
+    console.log(svc.name + " iniciado...\nServiço disponível na porta: " + argv.p + " em: " + argv.n);
 });
 
 // Install the script as a service.

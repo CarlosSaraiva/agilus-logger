@@ -14,12 +14,12 @@ var tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, 
 var connectionString, connectionErrorFlag;
 
 //Variaveis do usuario
-var port = process.env.p;
+var args = process.env;
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(port, "0.0.0.0", function () {
-        log.info("Server iniciado na porta: " + port);
+    server.listen(args.port, "0.0.0.0", function () {
+        log.info("Server iniciado na porta: " + args.port);
     });
 });
 
@@ -53,7 +53,7 @@ function readUDL(file, callback) {
                 password: udl.Password !== undefined ? udl.Password : "",
                 server: udl.DataSource !== undefined ? udl.DataSource : "",
                 database: udl.InitialCatalog !== undefined ? udl.InitialCatalog : "",
-                appName: "Agilus Logger"
+                appName: args.appName
             };
             callback();
         }
