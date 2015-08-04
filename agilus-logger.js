@@ -5,7 +5,6 @@ var sql = require("mssql");
 var fs = require("fs");
 var path = require("path");
 var EventLogger = require("node-windows").EventLogger;
-var minimist = require("minimist");
 
 //Instanciando objetos e declarando/iniciando variáveis
 var router = new Router();
@@ -14,13 +13,13 @@ var log = new EventLogger("Agilus Logger");
 var tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
 var connectionString, connectionErrorFlag;
 
-//Argumentos do prompt
-console.log(minimist);
+//Variaveis do usuario
+var port = process.env.p;
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(1330, "0.0.0.0", function () {
-        log.info("Server iniciado na porta 1330");
+    server.listen(port, "0.0.0.0", function () {
+        log.info("Server iniciado na porta: " + port);
     });
 });
 
