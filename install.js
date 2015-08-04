@@ -21,10 +21,6 @@ var svc = new Service({
     }
 });
 
-// svc.user.domain = 'mydomain.local';
-// svc.user.account = 'Carlos';
-// svc.user.password = 'sde9016207946';
-
 // Listen for the "install" event, which indicates the
 // process is available as a service.
 svc.on('install', function () {
