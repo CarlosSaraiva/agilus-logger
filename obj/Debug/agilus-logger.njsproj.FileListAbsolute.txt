@@ -1,4 +1,2 @@
 C:\Users\Carlos\Documents\Repositories\agilus-logger\obj\Debug\agilus-logger.njsprojResolveAssemblyReference.cache
 C:\Users\Carlos\Documents\Repositories\agilus-logger\bin\Microsoft.NodejsTools.WebRole.dll
-C:\Users\Suporte\Documents\repositories\agilus-logger\obj\Debug\agilus-logger.njsprojResolveAssemblyReference.cache
-C:\Users\Suporte\Documents\repositories\agilus-logger\bin\Microsoft.NodejsTools.WebRole.dll
