@@ -19,6 +19,7 @@
     <Content Include="JSLintNet.json" />
     <Content Include="package.json" />
     <Compile Include="agilus-logger.js" />
+    <Compile Include="gulpfile.js" />
     <Compile Include="install.js" />
     <Compile Include="uninstall.js" />
   </ItemGroup>
