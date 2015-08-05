@@ -1,8 +1,13 @@
 ﻿/// <vs AfterBuild='copy' />
 var gulp = require("gulp"),
-    copy = require("gulp-copy");
+    replace = require("gulp-replace-path");
 
-gulp.task("copy", function() {
-    gulp.src("agilus-logger.js")
+var srcPath = "./src/";
+
+gulp.task("build", function() {
+    gulp.src([srcPath + "agilus-logger.js", srcPath + "install.js", srcPath +"uninstall.js", srcPath + "package.json"])
+        .pipe(replace(/..\/node_modules\//g, ""))
         .pipe(gulp.dest("./build"));
 });
+
+
