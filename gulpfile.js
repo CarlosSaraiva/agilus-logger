@@ -1,4 +1,4 @@
-﻿/// <vs AfterBuild='copy' />
+/// <vs AfterBuild='build' />
 var gulp = require("gulp"),
     replace = require("gulp-replace-path");
 

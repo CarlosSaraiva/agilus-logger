@@ -1,3 +1,6 @@
 node_modules
 daemon
 agilus.udl
+bin
+obj
+agilus-logger.sln.DotSettings.user

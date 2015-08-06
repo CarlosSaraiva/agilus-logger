@@ -16,6 +16,9 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="src\agilus-logger.js" />
+    <Compile Include="src\install.js" />
+    <Compile Include="src\uninstall.js" />
     <Content Include="build\agilus.udl" />
     <Content Include="build\package.json" />
     <Content Include="JSLintNet.json" />
@@ -24,6 +27,7 @@
     <Compile Include="build\install.js" />
     <Compile Include="build\uninstall.js" />
     <Compile Include="gulpfile.js" />
+    <Content Include="src\JSLintNet.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="build\" />
