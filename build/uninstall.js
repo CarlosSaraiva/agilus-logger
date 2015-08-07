@@ -2,33 +2,30 @@ var Service = require("node-windows").Service,
     xml = require("xml2js"),
     fs = require("fs");
 
-fs.readdir("/daemon", function(list, err) {
-    if (!err) {        
-        console.log(list.match(/\w+\D?\.xml/g));
+var serviceName;
+var svc;
 
-    }
-
-});
-
-var execName = fs.readdir("daemon/", function(files, err) {
+fs.readdir(process.cwd() + "/daemon", function(err, list) {
     if (!err) {
-        console.log(files);
+        var parser = new xml.Parser();
+        var name = list.filter(function(e) {
+            return e.match(/\w+\D?\.xml/);
+        });
+        fs.readFile(__dirname + "/daemon/" + name[0], function (err, data) {
+            parser.parseString(data, function(err, result) {
+                svc = new Service({
+                    name: result.service.name[0],
+                    script: require("path").join(__dirname, "agilus-logger.js")
+                });
+                svc.on("uninstall", function () {
+                    console.log("Serviço desinstalado");
+                    console.log("Serviço no sistema? ", svc.exists);
+                });
+                svc.uninstall();
+            });
+        });
+
     } else {
-        throw (err);
+        console.log(err);
     }
 });
-
-// Create a new service object
-var svc = new Service({
-    name: "Agilus Logger",
-    script: require("path").join(__dirname, "agilus-logger.js")
-});
-
-// Listen for the "uninstall" event so we know when it's done.
-svc.on("uninstall", function () {
-    console.log("Serviço desinstalado");
-    console.log("Serviço no sistema? ", svc.exists);
-});
-
-// Uninstall the service.
-svc.uninstall();
