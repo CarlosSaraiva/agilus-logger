@@ -5,7 +5,7 @@ var gulp = require("gulp"),
 var srcPath = "./src/";
 
 gulp.task("build", function() {
-    gulp.src([srcPath + "agilus-logger.js", srcPath + "install.js", srcPath +"uninstall.js", srcPath + "package.json"])
+    gulp.src([srcPath + "agilus-logger.js", srcPath + "install.js", srcPath +"uninstall.js", "package.json"])
         .pipe(replace(/..\/node_modules\//g, ""))
         .pipe(gulp.dest("./build"));
 });

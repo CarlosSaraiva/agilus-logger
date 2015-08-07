@@ -7,19 +7,20 @@ var path = require("path");
 var EventLogger = require("node-windows").EventLogger;
 
 //Instanciando objetos e declarando/iniciando variáveis
-var router = new Router();
-var server = http.createServer(router);
-var log = new EventLogger("Agilus Logger");
-var tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)";
-var connectionString, connectionErrorFlag;
+var router = new Router(),
+    server = http.createServer(router),
+    log = new EventLogger("Agilus Logger"),
+    tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)",
+    connectionString, connectionErrorFlag;
 
 //Variaveis do usuario
-var args = process.env;
+var port = process.env.port,
+    name = process.env.appName;
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(args.port, "0.0.0.0", function () {
-        log.info("Server iniciado na porta: " + args.port);
+    server.listen(port, "0.0.0.0", function () {
+        log.info("Server iniciado na porta: " + port);
     });
 });
 
@@ -53,7 +54,7 @@ function readUDL(file, callback) {
                 password: udl.Password !== undefined ? udl.Password : "",
                 server: udl.DataSource !== undefined ? udl.DataSource : "",
                 database: udl.InitialCatalog !== undefined ? udl.InitialCatalog : "",
-                appName: args.appName
+                appName: name
             };
             callback();
         }
