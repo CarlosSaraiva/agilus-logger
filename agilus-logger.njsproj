@@ -21,13 +21,11 @@
     <Compile Include="src\uninstall.js" />
     <Content Include="build\agilus.udl" />
     <Content Include="build\package.json" />
-    <Content Include="JSLintNet.json" />
     <Content Include="package.json" />
     <Compile Include="build\agilus-logger.js" />
     <Compile Include="build\install.js" />
     <Compile Include="build\uninstall.js" />
     <Compile Include="gulpfile.js" />
-    <Content Include="src\JSLintNet.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="build\" />
