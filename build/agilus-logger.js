@@ -87,9 +87,14 @@ function database(query, callback) {
             }
         });
     });
+<<<<<<< HEAD
     
     //Retorno do Promise
     db.then(function (connection) { //Quando a conexão for bem sucedida
+=======
+
+    db.then(function (connection) {
+>>>>>>> cdf95855d2d4926556def785016031e5120a5edc
         var request = new sql.Request(connection);
         request.query(query, function(queryError) {
             if (!queryError) {
@@ -101,14 +106,42 @@ function database(query, callback) {
             connection.close();
         });
     },
+<<<<<<< HEAD
     function (connectionError) { //Caso a conexão der erro
         log.error(connectionError.name + ": " + connectionError.message, 1000);
         callback(connectionError);
     })
     .catch(function (e) { //Bloco de catch
         log.error(e, 1000);
+=======
+    function(connectionError) {
+        log.error(connectionError.name + ": " + connectionError.message, 1000);
+        callback(connectionError);
+    })
+    .catch(function(e) {
+        console.log(e);
+>>>>>>> cdf95855d2d4926556def785016031e5120a5edc
     });
 }
+
+
+//    var connection = new sql.Connection(connectionString, function (connectionError) {
+//        if (!connectionError) {
+//            var request = new sql.Request(connection);
+//            request.query(query, function (queryError) {
+//                if (!queryError) {
+//                    callback("Ok");
+//                } else {
+//                    log.error(queryError.name + ": " + queryError.message, 1000);
+//                    callback(queryError);
+//                }
+//                connection.close();
+//            });
+//        } else {
+
+//        }
+//    });
+//}
 
 //Função que converte arquivos udl para o formato json
 function UDLtoJSON(data) {
