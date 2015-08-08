@@ -19,7 +19,7 @@ var port = process.env.port,
 
 //Leitura do arquivo de configuração e Inicio do server
 readUDL("agilus.udl", function () {
-    server.listen(port, "0.0.0.0", function () {
+    server.listen(1330, "0.0.0.0", function () {
         log.info("Server iniciado na porta: " + port);
     });
 });
@@ -77,24 +77,56 @@ function insertString(request) {
 
 //Função responsavel por conectar no banco de dados e fazer a inserção
 function database(query, callback) {
-    var connection = new sql.Connection(connectionString, function (connectionError) {
-        if (!connectionError) {
-            var request = new sql.Request(connection);
-            request.query(query, function (queryError) {
-                if (!queryError) {
-                    callback("Ok");
-                } else {
-                    log.error(queryError.name + ": " + queryError.message, 1000);
-                    callback(queryError);
-                }
-                connection.close();
-            });
-        } else {
-            log.error(connectionError.name + ": " + connectionError.message, 1000);
-            callback(connectionError);
-        }
+
+    var db = new Promise(function(resolve, reject) {
+        var connection = new sql.Connection(connectionString, function(connectionError) {
+            if (!connectionError) {
+                resolve(connection);
+            } else {
+                reject(connectionError);
+            }
+        });
+    });
+
+    db.then(function (connection) {
+        var request = new sql.Request(connection);
+        request.query(query, function(queryError) {
+            if (!queryError) {
+                callback("Ok");
+            } else {
+                log.error(queryError.name + ": " + queryError.message, 1000);
+                callback(queryError);
+            }
+            connection.close();
+        });
+    },
+    function(connectionError) {
+        log.error(connectionError.name + ": " + connectionError.message, 1000);
+        callback(connectionError);
+    })
+    .catch(function(e) {
+        console.log(e);
     });
 }
+
+
+//    var connection = new sql.Connection(connectionString, function (connectionError) {
+//        if (!connectionError) {
+//            var request = new sql.Request(connection);
+//            request.query(query, function (queryError) {
+//                if (!queryError) {
+//                    callback("Ok");
+//                } else {
+//                    log.error(queryError.name + ": " + queryError.message, 1000);
+//                    callback(queryError);
+//                }
+//                connection.close();
+//            });
+//        } else {
+
+//        }
+//    });
+//}
 
 //Função que converte arquivos udl para o formato json
 function UDLtoJSON(data) {
