@@ -1,0 +1,9 @@
+node_modules
+daemon
+agilus.udl
+bin
+obj
+agilus-logger.sln.DotSettings.user
+.ntvs_analysis.dat.tmp
+.ntvs_analysis.dat
+src/agilus.udl
