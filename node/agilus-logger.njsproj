@@ -20,7 +20,6 @@
     <Compile Include="src\install.js" />
     <Compile Include="src\uninstall.js" />
     <Content Include="build\agilus.udl" />
-    <Content Include="build\package.json" />
     <Content Include="package.json" />
     <Compile Include="build\agilus-logger.js" />
     <Compile Include="build\install.js" />

@@ -15,32 +15,17 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static ServiceController[] Services;
         public MainWindow()
         {
-            InitializeComponent();            
-            var process = Process.GetProcesses();
-            var services = ServiceController.GetServices();
-            listView.Items.Add(GetServicesListView(services.ToList()));
-            listView.MouseDoubleClick += (o, s) => descricao.Text = GetService(services.ToList()).Status.ToString();
-            Stop.Click += (o, s) => GetService(services.ToList()).Stop();
-            Restart.Click += (o, s) => GetService(services.ToList()).Start();
-            NewButton.Click += (o, s) => Install();
+            InitializeComponent();                                             
+            StopButton.Click += (o, s) => GetService(Services.ToList()).Stop();
+            RestartButton.Click += (o, s) => GetService(Services.ToList()).Start();
+            NewButton.Click += (o, s) => tab.SelectedItem = configTab;
+            InstallButton.Click += (o, s) => Install();
+            CancelButton.Click += (o, s) => tab.SelectedItem = infoTab;
+            UpdateList();
         }
-
-        //private ListViewItem GetProcessListView(List<Process> processes)
-        //{
-        //    var list = new ListViewItem();
-        //    processes.ForEach(p => listView.Items.Add(list.Content = p.ProcessName));
-        //    return list;
-        //}
-
-        //private string GetProcessDetails(List<Process> process)
-        //{
-        //    var p = process.Find(e => e.ProcessName == (string) listView.SelectedItem);
-        //    string details = "Nome:\t" + p.ProcessName + "\n" +
-        //                     "PID:\t" + p.Id + "\n";
-        //    return details;
-        //}
 
         private ListViewItem GetServicesListView(List<ServiceController> service)
         {
@@ -58,31 +43,75 @@ namespace WpfApplication1
 
         private ServiceController GetService(List<ServiceController> service)
         {
+            MessageBox.Show((string) listView.SelectedItem);
             var s = service.Find(e => e.ServiceName == (string)listView.SelectedItem);
             return s;
         }
 
+        private void UpdateList()
+        {
+            Services = ServiceController.GetServices();
+            listView.Items.Clear();
+            listView.Items.Add(GetServicesListView(Services.ToList()));
+            listView.MouseDoubleClick += (o, s) => descricao.Text = GetService(Services.ToList()).Status.ToString();
+            
+        }
+
         private void Install()
         {
-            var rootPath = AppDomain.CurrentDomain.BaseDirectory;
-            var nodePath = Path.Combine(Environment.GetEnvironmentVariable("ProgramFiles"), "nodejs");
-            var loggerPath = Path.GetFullPath("C:\\Users\\Suporte\\Documents\\repositories\\agilus-logger\\node\\src\\install.js");
-            var cmd = nodePath + "\\node.exe " + loggerPath + " " + "-p 1430 -n teste";
+            string loggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
+            string servicePath = Path.Combine(loggerPath, serviceName.Text);
+
+            if (!Directory.Exists(loggerPath))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(loggerPath);
+            }
+
+            if (!Directory.Exists(servicePath))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(servicePath);
+            }
+
+ 
+            string[] files = Directory.GetFiles("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\build");
+            File.Copy("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\package.json", Path.Combine(loggerPath, "package.json"));
+
+            foreach (string s in files)
+            {
+                if (s != null)
+                {
+                    var destFile = Path.Combine(servicePath, Path.GetFileName(s));
+                    File.Copy(s, destFile, true);
+                }
+            }
+
+
             var process = new Process
             {
                 StartInfo =
                 {
-                    FileName = Path.Combine(nodePath, "node.exe"),
-                    Arguments = Path.Combine(loggerPath),
+                    FileName = "agilus.cmd",
+                    Arguments = @"-p " + servicePort.Text + " -n " + serviceName.Text,
+                    WindowStyle = ProcessWindowStyle.Hidden,
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 }
             };
-            //process.StartInfo.Arguments = "-p 1340 -n teste";
+            
             process.Start();
             string stdout = process.StandardOutput.ReadToEnd();
-            MessageBox.Show(process.StandardOutput.ReadToEnd());
             process.WaitForExit();
+            UpdateList();
+        }
+
+        private void Uninstall()
+        {
+            
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

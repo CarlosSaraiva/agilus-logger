@@ -1,10 +1,10 @@
 //Importando módulos
 var http = require("http");
-var Router = require("node-simple-router");
-var sql = require("mssql");
+var Router = require("../node_modules/node-simple-router");
+var sql = require("../node_modules/mssql");
 var fs = require("fs");
 var path = require("path");
-var EventLogger = require("node-windows").EventLogger;
+var EventLogger = require("../node_modules/node-windows").EventLogger;
 
 //Instanciando objetos e declarando/iniciando variáveis
 var router = new Router(),

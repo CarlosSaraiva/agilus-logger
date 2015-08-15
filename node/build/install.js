@@ -1,11 +1,11 @@
-var Service = require("node-windows").Service;
-var wincmd = require("node-windows");
-var argv = require("minimist")(process.argv.slice(2));
+var Service = require("../node_modules/node-windows").Service;
+var wincmd = require("../node_modules/node-windows");
+var argv = require("../node_modules/minimist")(process.argv.slice(2));
 var fs = require("fs");
 
 //Variaveis do serviço
-var port = argv.p | 1330,
-    name = argv.n | "",
+var port = argv.p,
+    name = argv.n,
     appName = "Agilus Logger - " + name + " (porta: " + port + " )";
 
 // Create a new service object

@@ -14,9 +14,29 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock x:Name="descricao" HorizontalAlignment="Left" Margin="479,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="366" Width="331"><Run Text="TextBlock"/></TextBlock>
-        <Button x:Name="Restart" Content="Restart" Margin="508,457,326,57"/>
-        <Button x:Name="Stop" Content="Stop" Margin="603,457,231,57"/>
-        <Button x:Name="NewButton" Content="New Service" HorizontalAlignment="Left" Margin="699,457,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
+        <TabControl x:Name="tab" HorizontalAlignment="Left" Height="441" Margin="413,10,0,0" VerticalAlignment="Top" Width="467">
+            <TabItem x:Name="infoTab" Header="TabItem">
+                <Grid Background="#FFE5E5E5" Margin="0,-3,-11,3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="209*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="RestartButton" Content="Restart" Margin="10,339,46,42"/>
+                    <Button x:Name="StopButton" Content="Stop" Height="32" Width="75" Margin="112,339,285,42" Grid.ColumnSpan="2"/>
+                    <TextBlock x:Name="descricao" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="304" Width="426" Grid.ColumnSpan="2"><Run Text="TextBlock"/></TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="configTab" Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="Nome:" HorizontalAlignment="Left" Margin="132,165,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="serviceName" HorizontalAlignment="Left" Height="23" Margin="215,168,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+                    <Label Content="Porta:&#xD;&#xA;" HorizontalAlignment="Left" Margin="132,201,0,0" VerticalAlignment="Top" Width="45" Height="27"/>
+                    <TextBox x:Name="servicePort" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Margin="215,205,0,0"/>
+                    <Button x:Name="InstallButton" Content="Button" HorizontalAlignment="Left" Margin="142,291,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="CancelButton" Content="Button" HorizontalAlignment="Left" Margin="266,291,0,0" VerticalAlignment="Top" Width="75"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="NewButton" Content="New Service" HorizontalAlignment="Left" Margin="413,466,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
     </Grid>
 </Window>

@@ -4,8 +4,8 @@ var argv = require("../node_modules/minimist")(process.argv.slice(2));
 var fs = require("fs");
 
 //Variaveis do serviço
-var port = argv.p | 1330,
-    name = argv.n | "",
+var port = argv.p,
+    name = argv.n,
     appName = "Agilus Logger - " + name + " (porta: " + port + " )";
 
 // Create a new service object
