@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ProfilingTarget xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectTarget>
+    <TargetProject>378bc119-db11-4ce5-885c-ead4e4b43c3b</TargetProject>
+    <FriendlyName>agilus-logger</FriendlyName>
+  </ProjectTarget>
+</ProfilingTarget>

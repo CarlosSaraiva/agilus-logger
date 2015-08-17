@@ -16,18 +16,22 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="build\logger\uninstall.js" />
     <Compile Include="src\agilus-logger.js" />
     <Compile Include="src\install.js" />
     <Compile Include="src\uninstall.js" />
-    <Content Include="build\agilus.udl" />
+    <Content Include="build\logger\agilus.cmd" />
+    <Content Include="build\service\agilus.udl" />
     <Content Include="package.json" />
-    <Compile Include="build\agilus-logger.js" />
-    <Compile Include="build\install.js" />
+    <Compile Include="build\service\agilus-logger.js" />
+    <Compile Include="build\logger\install.js" />
     <Compile Include="build\uninstall.js" />
     <Compile Include="gulpfile.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="build\" />
+    <Folder Include="build\logger\" />
+    <Folder Include="build\service\" />
     <Folder Include="src\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

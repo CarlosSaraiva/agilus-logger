@@ -23,7 +23,11 @@
                     </Grid.ColumnDefinitions>
                     <Button x:Name="RestartButton" Content="Restart" Margin="10,339,46,42"/>
                     <Button x:Name="StopButton" Content="Stop" Height="32" Width="75" Margin="112,339,285,42" Grid.ColumnSpan="2"/>
-                    <TextBlock x:Name="descricao" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="304" Width="426" Grid.ColumnSpan="2"><Run Text="TextBlock"/></TextBlock>
+                    <TextBlock x:Name="descricao" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="304" Width="426" Grid.ColumnSpan="2"
+                               Grid.Column="0">
+                        <TextBlock.BindingGroup>
+                            <BindingGroup/>
+                        </TextBlock.BindingGroup></TextBlock>
                 </Grid>
             </TabItem>
             <TabItem x:Name="configTab" Header="TabItem">
