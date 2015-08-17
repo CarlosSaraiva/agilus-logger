@@ -1,9 +1,12 @@
 var Service = require("node-windows").Service,
     xml = require("xml2js"),
-    fs = require("fs");
+    fs = require("fs"),
+    argv = require("minimist");
 
-var serviceName;
-var svc;
+var serviceName,
+    svc;
+
+
 
 fs.readdir(process.cwd() + "/daemon", function(err, list) {
     if (!err) {

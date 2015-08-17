@@ -20,17 +20,25 @@ namespace WpfApplication1
         public static ServiceController[] Services;
         public static string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
         public static DispatcherTimer timer = new DispatcherTimer();
-        public static DispatcherTimer descricaoTimer = new DispatcherTimer();
-        //public static EventHandler UT;
+        public static DispatcherTimer descricaoTimer = new DispatcherTimer();        
 
         public MainWindow()
         {
             InitializeComponent();                                             
             StopButton.Click += (o, s) => GetSelectedService(Services.ToList()).Stop();
-            RestartButton.Click += (o, s) => GetSelectedService(Services.ToList()).Start();
+            RestartButton.Click += (o, s) =>
+            {
+                var service = GetSelectedService(Services.ToList());
+                if (service.CanStop)
+                {
+                    service.Stop();
+                }
+                service.Start();
+            };
             NewButton.Click += (o, s) => tab.SelectedItem = configTab;
             InstallButton.Click += (o, s) => Install();
             CancelButton.Click += (o, s) => tab.SelectedItem = infoTab;
+            UninstallButton.Click += (o, s) => Uninstall();
             
             timer.Tick += (o, s) => UpdateList();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 300);
@@ -50,22 +58,36 @@ namespace WpfApplication1
         {
             if (GetSelectedService(Services.ToList()) != null)
             {
-                descricao.Text = GetSelectedService(Services.ToList()).Status.ToString();
+                var service = GetSelectedService(Services.ToList());
+                labelName.Content = GetName(service.DisplayName);
+                labelStatus.Content = service.Status;
             }
         }
 
+        private string GetName(string name)
+        {
+            Regex regex = new Regex(@"(Agilus Logger)(?:\s\-\s)(\w*\s)");
+            Match match = regex.Match(name);
+            return match.Groups[2].Value;
+        }
 
         private ListViewItem GetServicesListView(List<ServiceController> service)
         {
-            var list = new ListViewItem();
             Regex regex = new Regex(@"^agilus(\w*|\d*/)");
-            
             service.ForEach(s =>
             {
                 Match match = regex.Match(s.ServiceName);
                 if (match.Success)
-                    listView.Items.Add(list.Content = s.ServiceName);
+                {
+                    ListViewItem[] item = new ListViewItem[];          
+                    
+                    listView.Items.Add(item.Content = GetName(s.DisplayName));
+                    
+                }
             });
+
+            gridView.
+            
             return list;
         }
 
@@ -78,12 +100,9 @@ namespace WpfApplication1
         private void UpdateList()
         {
             var selected = listView.SelectedItem;
-
             Services = ServiceController.GetServices();
-            //Dispatcher.BeginInvoke(new Action(() => listView.Items.Clear()));
             listView.Items.Clear();
             listView.Items.Add(GetServicesListView(Services.ToList()));
-
 
             listView.MouseDoubleClick += (o, s) =>
             {
@@ -94,9 +113,7 @@ namespace WpfApplication1
                 }
 
                 descricaoTimer.Start();    
-                
             };
-
             listView.SelectedItem = selected;
         }
 
@@ -116,9 +133,9 @@ namespace WpfApplication1
                 //Directory.CreateDirectory(Path.Combine(servicePath, "daemon"));
             }
 
-            string[] loggerFiles = Directory.GetFiles("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\build\\logger");
-            string[] serviceFiles = Directory.GetFiles("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\build\\service");
-            File.Copy("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\package.json", Path.Combine(LoggerPath, "package.json"), true);
+            string[] loggerFiles = Directory.GetFiles("dist\\logger");
+            string[] serviceFiles = Directory.GetFiles("dist\\service");
+            //File.Copy("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\package.json", Path.Combine(LoggerPath, "package.json"), true);
 
             foreach (string s in loggerFiles)
             {
@@ -174,10 +191,44 @@ namespace WpfApplication1
 
         private void Uninstall()
         {
+            var service = GetSelectedService(Services.ToList());
+
+            var process = new Process()
+            {
+                StartInfo =
+                {
+                    FileName = "sc.exe ",
+                    Arguments = "delete " + service.DisplayName + ".exe"
+                }
+            };
+
+            if (service.CanStop)
+            {
+                service.Stop();    
+            }
             
+
+            process.Start();
+            process.WaitForExit();
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
