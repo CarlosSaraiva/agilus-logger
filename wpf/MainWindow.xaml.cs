@@ -1,120 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.ServiceProcess;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace WpfApplication1
+namespace AgilusLogger
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window
     {
-        public static ServiceController[] Services;
+        public static Logger Logger;
         public static string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
-        public static DispatcherTimer timer = new DispatcherTimer();
-        public static DispatcherTimer descricaoTimer = new DispatcherTimer();        
-
+        public static readonly DispatcherTimer UpdateLoggerServicesTimer = new DispatcherTimer();
+        public static readonly DispatcherTimer DescricaoTimer = new DispatcherTimer();
+        
         public MainWindow()
         {
-            InitializeComponent();                                             
-            StopButton.Click += (o, s) => GetSelectedService(Services.ToList()).Stop();
-            RestartButton.Click += (o, s) =>
+            InitializeComponent();
+            Logger = new Logger(listView);
+            UpdateLoggerServicesTimer.Tick += (o, s) =>
             {
-                var service = GetSelectedService(Services.ToList());
-                if (service.CanStop)
-                {
-                    service.Stop();
-                }
-                service.Start();
-            };
+                Logger.LastSelectedIndex = listView.SelectedIndex;
+                Logger.GetServices();                
+            } ;
+            UpdateLoggerServicesTimer.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            UpdateLoggerServicesTimer.Start();
+            StopButton.Click += (o, s) => Logger.SelectedService.Stop();
+            listView.MouseDoubleClick += (o, s) => DescricaoTimer.Start();
+            RestartButton.Click += (o, s) => Logger.SelectedService.Refresh();
             NewButton.Click += (o, s) => tab.SelectedItem = configTab;
             InstallButton.Click += (o, s) => Install();
             CancelButton.Click += (o, s) => tab.SelectedItem = infoTab;
             UninstallButton.Click += (o, s) => Uninstall();
-            
-            timer.Tick += (o, s) => UpdateList();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            timer.Start();
-
-            descricaoTimer.Tick += UpdateText;
-            descricaoTimer.Interval = new TimeSpan(0, 0, 1);            
-
-        }
-
-        private void UpdateText(object sender, EventArgs e)
-        {
-            UpdateText();
+            DescricaoTimer.Tick += (o, s) => UpdateText();
+            DescricaoTimer.Interval = new TimeSpan(0, 0, 1);
+            DescricaoTimer.Start();
         }
 
         private void UpdateText()
         {
-            if (GetSelectedService(Services.ToList()) != null)
-            {
-                var service = GetSelectedService(Services.ToList());
-                labelName.Content = GetName(service.DisplayName);
-                labelStatus.Content = service.Status;
-            }
-        }
-
-        private string GetName(string name)
-        {
-            Regex regex = new Regex(@"(Agilus Logger)(?:\s\-\s)(\w*\s)");
-            Match match = regex.Match(name);
-            return match.Groups[2].Value;
-        }
-
-        private ListViewItem GetServicesListView(List<ServiceController> service)
-        {
-            Regex regex = new Regex(@"^agilus(\w*|\d*/)");
-            service.ForEach(s =>
-            {
-                Match match = regex.Match(s.ServiceName);
-                if (match.Success)
-                {
-                    ListViewItem[] item = new ListViewItem[];          
-                    
-                    listView.Items.Add(item.Content = GetName(s.DisplayName));
-                    
-                }
-            });
-
-            gridView.
-            
-            return list;
-        }
-
-        private ServiceController GetSelectedService(List<ServiceController> service)
-        {
-            var s = service.Find(e => e.ServiceName == (string)listView.SelectedItem);
-            return s;
-        }
-
-        private void UpdateList()
-        {
-            var selected = listView.SelectedItem;
-            Services = ServiceController.GetServices();
-            listView.Items.Clear();
-            listView.Items.Add(GetServicesListView(Services.ToList()));
-
-            listView.MouseDoubleClick += (o, s) =>
-            {
-                UpdateText();
-                if (!descricaoTimer.IsEnabled)
-                {
-                    descricaoTimer.Stop();
-                }
-
-                descricaoTimer.Start();    
-            };
-            listView.SelectedItem = selected;
+            if (Logger.SelectedLogger == null) return;
+            labelName.Content = Logger.SelectedLogger.Name;
+            labelStatus.Content = Logger.SelectedLogger.Status;
         }
 
         private void Install()
@@ -191,7 +122,7 @@ namespace WpfApplication1
 
         private void Uninstall()
         {
-            var service = GetSelectedService(Services.ToList());
+            var service = Logger.SelectedService;
 
             var process = new Process()
             {
