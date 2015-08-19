@@ -1,6 +1,6 @@
-var Service = require("../node_modules/node-windows").Service;
-var wincmd = require("../node_modules/node-windows");
-var argv = require("../node_modules/minimist")(process.argv.slice(2));
+var Service = require("node-windows").Service;
+var wincmd = require("node-windows");
+var argv = require("minimist")(process.argv.slice(2));
 var fs = require("fs");
 
 //Variaveis do serviço
@@ -12,7 +12,7 @@ var port = argv.p,
 var svc = new Service({
     name: "Agilus Logger - " + name + " (porta: " + port + " )",
     description: "Serviço VCON de armazenamento de histórico para empresa " + name + ", iniciado na porta: " + port,
-    script: require("path").join(__dirname, "agilus-logger.js"),
+    script: require("path").join(__dirname, name + "/agilus-logger.js"),
     env: [
         {
             name: "NODE_ENV",

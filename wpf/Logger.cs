@@ -8,8 +8,7 @@ namespace AgilusLogger
 {
     public class Logger
     {
-        private ObservableCollection<LoggerService> loggers;
-        private LoggerService selectedLogger;
+        private readonly ObservableCollection<LoggerService> loggers;
         public ServiceController SelectedService
         {
             get { return ((LoggerService) ListView.SelectedItem).Service; }
@@ -23,13 +22,11 @@ namespace AgilusLogger
                 return  loggers.ToList().Find(e => e == (LoggerService)ListView.SelectedItem);
             }
         }
-        
         public Logger(ListView listView)
         {
             ListView = listView;                     
             loggers = new ObservableCollection<LoggerService>();
         }
-
         public void GetServices()
         {
             loggers.Clear();
@@ -47,12 +44,10 @@ namespace AgilusLogger
 
             UpdateServicesListViewItem();
         }
-
         public void UpdateServicesListViewItem()
         {            
             ListView.ItemsSource = loggers;
             ListView.SelectedIndex = LastSelectedIndex;
         }
-
     }
 }

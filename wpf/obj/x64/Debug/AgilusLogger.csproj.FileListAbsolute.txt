@@ -11,6 +11,10 @@ C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\WpfAppli
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.g.resources
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.Properties.Resources.resources
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csproj.GenerateResource.Cache
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.exe.config
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.exe
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.pdb
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csprojResolveAssemblyReference.cache
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\MainWindow.baml
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\MainWindow.g.cs
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\App.g.cs
@@ -18,9 +22,5 @@ C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplic
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.g.resources
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.Properties.Resources.resources
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csproj.GenerateResource.Cache
-C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.exe.config
-C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.exe
-C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.pdb
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.exe
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.pdb
-C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csprojResolveAssemblyReference.cache

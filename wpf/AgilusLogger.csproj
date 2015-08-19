@@ -76,7 +76,7 @@
     </ApplicationDefinition>
     <Compile Include="Logger.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="Service.cs" />
+    <Compile Include="LoggerService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,6 +108,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\AgilusLogger.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\AgilusLogger.Properties.Settings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

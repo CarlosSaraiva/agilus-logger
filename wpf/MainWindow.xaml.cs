@@ -11,10 +11,10 @@ namespace AgilusLogger
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public static Logger Logger;
-        public static string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
+        public static readonly string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
         public static readonly DispatcherTimer UpdateLoggerServicesTimer = new DispatcherTimer();
         public static readonly DispatcherTimer DescricaoTimer = new DispatcherTimer();
         
@@ -22,11 +22,24 @@ namespace AgilusLogger
         {
             InitializeComponent();
             Logger = new Logger(listView);
+            InitializeEvents();
+
+        }
+        private void UpdateText()
+        {
+            if (Logger.SelectedLogger == null) return;
+            labelName.Content = Logger.SelectedLogger.EntityName;
+            labelStatus.Content = Logger.SelectedLogger.Status;
+            labelServiceName.Content = Logger.SelectedLogger.Service.ServiceName;
+            labelMachineName.Content = Logger.SelectedLogger.Service.MachineName;
+        }
+        private void InitializeEvents()
+        {
             UpdateLoggerServicesTimer.Tick += (o, s) =>
             {
                 Logger.LastSelectedIndex = listView.SelectedIndex;
-                Logger.GetServices();                
-            } ;
+                Logger.GetServices();
+            };
             UpdateLoggerServicesTimer.Interval = new TimeSpan(0, 0, 0, 0, 300);
             UpdateLoggerServicesTimer.Start();
             StopButton.Click += (o, s) => Logger.SelectedService.Stop();
@@ -39,35 +52,26 @@ namespace AgilusLogger
             DescricaoTimer.Tick += (o, s) => UpdateText();
             DescricaoTimer.Interval = new TimeSpan(0, 0, 1);
             DescricaoTimer.Start();
+            
         }
-
-        private void UpdateText()
-        {
-            if (Logger.SelectedLogger == null) return;
-            labelName.Content = Logger.SelectedLogger.Name;
-            labelStatus.Content = Logger.SelectedLogger.Status;
-        }
-
         private void Install()
-        {
-            LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
+        {            
             string servicePath = Path.Combine(LoggerPath, serviceName.Text);
 
             if (!Directory.Exists(LoggerPath))
             {
-                DirectoryInfo di = Directory.CreateDirectory(LoggerPath);
+                Directory.CreateDirectory(LoggerPath);
             }
 
             if (!Directory.Exists(servicePath))
             {
-                DirectoryInfo di = Directory.CreateDirectory(servicePath);
+                Directory.CreateDirectory(servicePath);
                 //Directory.CreateDirectory(Path.Combine(servicePath, "daemon"));
             }
 
             string[] loggerFiles = Directory.GetFiles("dist\\logger");
             string[] serviceFiles = Directory.GetFiles("dist\\service");
-            //File.Copy("C:\\Users\\Carlos\\Documents\\Repositories\\agilus-logger\\node\\package.json", Path.Combine(LoggerPath, "package.json"), true);
-
+            
             foreach (string s in loggerFiles)
             {
                 if (s == null) continue;
@@ -97,11 +101,10 @@ namespace AgilusLogger
             };
             
             process.Start();
-            string stdout = process.StandardOutput.ReadToEnd();
+            //string stdout = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
         }
-
-        private void UpdateNpm()
+        private static void UpdateNpm()
         {
             var process = new Process
             {
@@ -119,23 +122,22 @@ namespace AgilusLogger
             process.WaitForExit();
 
         }
-
-        private void Uninstall()
+        private static void Uninstall()
         {
-            var service = Logger.SelectedService;
+            var service = Logger.SelectedLogger;
 
             var process = new Process()
             {
                 StartInfo =
                 {
-                    FileName = "sc.exe ",
-                    Arguments = "delete " + service.DisplayName + ".exe"
+                    FileName = Path.Combine(LoggerPath, "uninstall.cmd"),
+                    Arguments = "-n " + service.EntityName + "-s " + service.Service.ServiceName
                 }
             };
 
-            if (service.CanStop)
+            if (service.Service.CanStop)
             {
-                service.Stop();    
+                service.Service.Stop();    
             }
             
 
@@ -143,22 +145,18 @@ namespace AgilusLogger
             process.WaitForExit();
 
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

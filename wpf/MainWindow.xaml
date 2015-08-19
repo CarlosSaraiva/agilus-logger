@@ -13,7 +13,7 @@
                     <GridView.ColumnHeaderContextMenu>
                         <ContextMenu/>
                     </GridView.ColumnHeaderContextMenu>
-                    <GridViewColumn x:Name="Name" Header="Nome" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn x:Name="Name" Header="Nome" DisplayMemberBinding="{Binding EntityName}" />
                     <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Porta" DisplayMemberBinding="{Binding Port}"/>
                 </GridView>
@@ -27,8 +27,12 @@
                     <Button x:Name="RestartButton" Content="Restart" Margin="32,354,364,27"/>
                     <Button x:Name="UninstallButton" Content="Uninstall" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="188,354,0,0" Width="68"/>
                     <Label x:Name="labelStatus_text" Content="Status:" HorizontalAlignment="Left" Margin="32,60,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="labelName" Content="&#xD;&#xA;" HorizontalAlignment="Center" Margin="116,10,90,348" VerticalAlignment="Center" Width="260" FontWeight="Bold" Height="47"/>
-                    <Label x:Name="labelStatus" Content="&#xD;&#xA;" HorizontalAlignment="Left" Margin="93,60,0,0" VerticalAlignment="Top" Width="186"/>
+                    <Label x:Name="labelName" Content="&#xD;&#xA;" HorizontalAlignment="Center" Margin="188,10,170,344" VerticalAlignment="Center" Width="108" FontWeight="Bold" Height="47" FontSize="16"/>
+                    <Label x:Name="labelStatus" Content="&#xD;&#xA;" HorizontalAlignment="Left" Margin="116,60,0,0" VerticalAlignment="Top" Width="108" Height="26"/>
+                    <Label x:Name="labelServiceName_text" Content="Executável:" HorizontalAlignment="Left" Margin="32,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.421,1.615"/>
+                    <Label x:Name="labelServiceName" Content="" HorizontalAlignment="Left" Margin="115,86,0,0" VerticalAlignment="Top" Width="108"/>
+                    <Label x:Name="labelMachineName_text" Content="Máquina:" HorizontalAlignment="Left" Margin="32,112,0,0" VerticalAlignment="Top" Width="68"/>
+                    <Label x:Name="labelMachineName" Content="" HorizontalAlignment="Left" Margin="116,112,0,0" VerticalAlignment="Top" Width="107"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="configTab" Header="TabItem">
