@@ -33,6 +33,8 @@
                     <Label x:Name="labelServiceName" Content="" HorizontalAlignment="Left" Margin="115,86,0,0" VerticalAlignment="Top" Width="108"/>
                     <Label x:Name="labelMachineName_text" Content="Máquina:" HorizontalAlignment="Left" Margin="32,112,0,0" VerticalAlignment="Top" Width="68"/>
                     <Label x:Name="labelMachineName" Content="" HorizontalAlignment="Left" Margin="116,112,0,0" VerticalAlignment="Top" Width="107"/>
+                    <Label x:Name="labelMachineLifeTime_text" Content="LifeTime" HorizontalAlignment="Left" Margin="33,138,0,0" VerticalAlignment="Top" Width="68"/>
+                    <Label x:Name="labelMachineLifeTime" Content="" HorizontalAlignment="Left" Margin="117,138,0,0" VerticalAlignment="Top" Width="107"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="configTab" Header="TabItem">
@@ -50,5 +52,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <TextBox x:Name="TextStatus" HorizontalAlignment="Left" Height="57" Margin="533,459,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="351"/>
     </Grid>
 </Window>

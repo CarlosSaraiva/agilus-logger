@@ -13,8 +13,8 @@ namespace AgilusLogger
         {
             get { return ((LoggerService) ListView.SelectedItem).Service; }
         }
-        public ListView ListView { get; private set; }
-        public int LastSelectedIndex { get; set; }
+        private ListView ListView { get; set; }
+        public int LastSelectedIndex { private get; set; }
         public LoggerService SelectedLogger
         {
             get
@@ -44,7 +44,7 @@ namespace AgilusLogger
 
             UpdateServicesListViewItem();
         }
-        public void UpdateServicesListViewItem()
+        private void UpdateServicesListViewItem()
         {            
             ListView.ItemsSource = loggers;
             ListView.SelectedIndex = LastSelectedIndex;
