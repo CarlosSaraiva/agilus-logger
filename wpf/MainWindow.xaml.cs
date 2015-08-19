@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Hardcodet.Wpf;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace AgilusLogger
 {
@@ -16,11 +18,13 @@ namespace AgilusLogger
         private static readonly string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
         private static readonly DispatcherTimer UpdateLoggerServicesTimer = new DispatcherTimer();
         private static readonly DispatcherTimer DescricaoTimer = new DispatcherTimer();
+        private static TaskbarIcon tray;
         public MainWindow()
         {
             InitializeComponent();
             logger = new Logger(listView);
             InitializeEvents();
+            tray = (TaskbarIcon)FindResource("NotifyIcon");
 
         }
         private void UpdateText()
