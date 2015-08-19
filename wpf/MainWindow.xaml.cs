@@ -13,10 +13,10 @@ namespace AgilusLogger
     
     public partial class MainWindow
     {
-        public static Logger Logger;
-        public static readonly string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
-        public static readonly DispatcherTimer UpdateLoggerServicesTimer = new DispatcherTimer();
-        public static readonly DispatcherTimer DescricaoTimer = new DispatcherTimer();
+        private static Logger Logger;
+        private static readonly string LoggerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
+        private static readonly DispatcherTimer UpdateLoggerServicesTimer = new DispatcherTimer();
+        private static readonly DispatcherTimer DescricaoTimer = new DispatcherTimer();
         
         public MainWindow()
         {
@@ -125,7 +125,6 @@ namespace AgilusLogger
         private static void Uninstall()
         {
             var service = Logger.SelectedLogger;
-
             var process = new Process()
             {
                 StartInfo =
@@ -139,11 +138,11 @@ namespace AgilusLogger
             {
                 service.Service.Stop();    
             }
-            
 
             process.Start();
             process.WaitForExit();
 
+            Directory.Delete(Path.Combine(LoggerPath, service.EntityName),true);
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

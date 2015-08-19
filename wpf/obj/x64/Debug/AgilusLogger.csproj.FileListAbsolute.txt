@@ -9,7 +9,6 @@ C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\MainWind
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\App.g.cs
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1_MarkupCompile.cache
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.g.resources
-C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.Properties.Resources.resources
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csproj.GenerateResource.Cache
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.exe.config
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\WpfApplication1.exe
@@ -24,3 +23,4 @@ C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLog
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csproj.GenerateResource.Cache
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.exe
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.pdb
+C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.Properties.Resources.resources

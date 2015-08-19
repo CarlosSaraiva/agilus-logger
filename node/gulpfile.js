@@ -22,7 +22,7 @@ gulp.task("build", function () {
         .pipe(gulp.dest("../wpf/bin/x64/Debug/dist/logger/"))
         .pipe(gulp.dest(process.env.appData + "/agilus-logger/"));
 
-    gulp.src([srcPath + "install.js", srcPath + "uninstall.js", "./build/logger/agilus.cmd"])
+    gulp.src([srcPath + "install.js", srcPath + "uninstall.js", srcPath +"/*.cmd"])
         .pipe(replace(/..\/node_modules\//g, ""))
         .pipe(gulp.dest("./build/logger"))
         .pipe(gulp.dest("../wpf/bin/x64/Debug/dist/logger"))
