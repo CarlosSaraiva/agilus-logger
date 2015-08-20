@@ -28,3 +28,4 @@ C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Hardcode
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Hardcodet.Wpf.TaskbarNotification.xml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\NotificationTray.baml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\App.baml
+C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csprojResolveAssemblyReference.cache

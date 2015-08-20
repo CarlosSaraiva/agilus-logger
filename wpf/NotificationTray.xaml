@@ -8,17 +8,18 @@
 
         <tb:TaskbarIcon.TrayPopup>
             <Border 
-                Background="White"
+                Background="White"                
                 BorderBrush="Orange"
                 BorderThickness="2"
                 CornerRadius="4"
                 Width="160"
                 Height="40"
                 >
-                <Button
-                    Content="{Binding EntityName}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
+                    <Label
+                        Content=" TESTE"
+                        
+                        />
+                
             </Border>
         </tb:TaskbarIcon.TrayPopup>
 

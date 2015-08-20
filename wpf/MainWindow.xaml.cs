@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using Hardcodet.Wpf;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace AgilusLogger
@@ -19,13 +20,14 @@ namespace AgilusLogger
         private static readonly DispatcherTimer UpdateLoggerServicesTimer = new DispatcherTimer();
         private static readonly DispatcherTimer DescricaoTimer = new DispatcherTimer();
         private static TaskbarIcon tray;
+        
         public MainWindow()
         {
             InitializeComponent();
             logger = new Logger(listView);
             InitializeEvents();
             tray = (TaskbarIcon)FindResource("NotifyIcon");
-
+            tray.Icon = new Icon("C:\\Users\\Suporte\\Documents\\repositories\\agilus-logger\\wpf\\Assets\\warning.ico");
         }
         private void UpdateText()
         {
@@ -72,8 +74,8 @@ namespace AgilusLogger
                 //Directory.CreateDirectory(Path.Combine(servicePath, "daemon"));
             }
 
-            string[] loggerFiles = Directory.GetFiles("dist\\logger");
-            string[] serviceFiles = Directory.GetFiles("dist\\service");
+            var loggerFiles = Directory.GetFiles("dist\\logger");
+            var serviceFiles = Directory.GetFiles("dist\\service");
             
             foreach (string s in loggerFiles)
             {
@@ -105,11 +107,12 @@ namespace AgilusLogger
             };
             
             process.Start();
+            tray.ShowBalloonTip("NPM", "Instalando NPM",  BalloonIcon.Info);
             string stdout = process.StandardOutput.ReadToEnd();
             TextStatus.Text = stdout;
             //process.WaitForExit();
         }
-        private static void UpdateNpm()
+        private void UpdateNpm()
         {
             var process = new Process
             {
@@ -125,6 +128,8 @@ namespace AgilusLogger
                 }
             };
             process.Start();
+            string stdout = process.StandardOutput.ReadToEnd();
+            TextStatus.Text = "Executando NPM";
             //process.WaitForExit();
         }
         private static void Uninstall()
