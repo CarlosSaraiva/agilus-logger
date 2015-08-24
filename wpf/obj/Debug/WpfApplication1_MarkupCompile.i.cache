@@ -5,16 +5,16 @@ winexe
 C#
 .cs
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\Debug\
-WpfApplication1
+AgilusLogger
 none
 false
 DEBUG;TRACE
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\App.xaml
-11151548125
+2-298773040
 
-9415795336
-13-1920480589
-MainWindow.xaml;
+121303421919
+15-1474058137
+MainWindow.xaml;NotificationTray.xaml;
 
 False
 

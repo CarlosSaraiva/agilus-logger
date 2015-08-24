@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -27,8 +28,10 @@ namespace AgilusLogger
             logger = new Logger(listView);
             InitializeEvents();
             tray = (TaskbarIcon)FindResource("NotifyIcon");
-            tray.Icon = new Icon("C:\\Users\\Suporte\\Documents\\repositories\\agilus-logger\\wpf\\Assets\\warning.ico");
+            //tray.Icon = new Icon("C:\\Users\\Suporte\\Documents\\repositories\\agilus-logger\\wpf\\Assets\\warning.ico");
+            //ElevateMe();
         }
+
         private void UpdateText()
         {
             if (logger.SelectedLogger == null) return;
@@ -38,6 +41,7 @@ namespace AgilusLogger
             labelMachineName.Content = logger.SelectedLogger.Service.MachineName;
             labelMachineLifeTime.Content = logger.SelectedLogger.Lifetime;
         }
+
         private void InitializeEvents()
         {
             UpdateLoggerServicesTimer.Tick += (o, s) =>
@@ -57,8 +61,9 @@ namespace AgilusLogger
             DescricaoTimer.Tick += (o, s) => UpdateText();
             DescricaoTimer.Interval = new TimeSpan(0, 0, 1);
             DescricaoTimer.Start();
-            
+            Application.Current.Startup += (o, s) => ElevateMe();
         }
+
         private void Install()
         {            
             string servicePath = Path.Combine(LoggerPath, serviceName.Text);
@@ -112,6 +117,7 @@ namespace AgilusLogger
             TextStatus.Text = stdout;
             //process.WaitForExit();
         }
+
         private void UpdateNpm()
         {
             var process = new Process
@@ -132,6 +138,7 @@ namespace AgilusLogger
             TextStatus.Text = "Executando NPM";
             //process.WaitForExit();
         }
+
         private static void Uninstall()
         {
             var service = logger.SelectedLogger;
@@ -140,37 +147,58 @@ namespace AgilusLogger
                 StartInfo =
                 {
                     FileName = Path.Combine(LoggerPath, "uninstall.cmd"),
-                    Arguments = "-n " + service.EntityName + "-s " + service.Service.ServiceName,
-                    UseShellExecute = false,
+                    Arguments = "-n " + service.EntityName + " -s " + service.Service.ServiceName,
+                    UseShellExecute = true,
                     CreateNoWindow = true,
-                    RedirectStandardOutput = true
+                    RedirectStandardOutput = false
                 }
             };
 
             if (service.Service.CanStop)
             {
-                service.Service.Stop();    
+                service.Service.Stop();
             }
-            
+
             process.Start();
-            var stdout = process.StandardOutput.ReadToEnd();
-            MessageBox.Show(stdout);
+           // var stdout = process.StandardOutput.ReadToEnd();
+            //MessageBox.Show(stdout);
             //process.WaitForExit();
 
             //Directory.Delete(Path.Combine(LoggerPath, service.EntityName),true);
         }
+
+        private static void ElevateMe()
+        {
+            var info = new ProcessStartInfo(Assembly.GetEntryAssembly().Location, String.Join(" ", Enumerable.Concat<String>(new[] {""}, new[] {" --engage "})))
+            {
+                Verb = "runas"
+            };
+
+            var process = new Process
+            {
+                EnableRaisingEvents = true,
+                StartInfo = info
+            };
+            process.Start();
+            process.WaitForExit();
+        }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
         private void tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
         {
 
         }
+
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
