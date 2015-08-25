@@ -60,6 +60,7 @@ namespace AgilusLogger
             DescricaoTimer.Interval = new TimeSpan(0, 0, 1);
             DescricaoTimer.Start();
             Application.Current.Startup += (o, s) => ElevateMe();
+            _logger.OnUpdate += (o, s) => Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() => MessageBox.Show(@"Serviço Parado")));
         }
 
         private void Install()

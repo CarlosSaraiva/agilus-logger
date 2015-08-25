@@ -95,9 +95,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IService.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="LoggerService.cs" />
+    <Compile Include="ServiceManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

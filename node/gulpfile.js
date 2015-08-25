@@ -5,9 +5,6 @@ var gulp = require("gulp"),
 
 var srcPath = "./src/";
 
-console.log(process.env.appData);
-
-
 gulp.task("flat", function (cb) {
     exec("flatten-packages", function (err, stdout, stderr) {
         console.log(stdout);

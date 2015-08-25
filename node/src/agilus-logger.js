@@ -6,6 +6,7 @@ var fs = require("fs");
 var path = require("path");
 var EventLogger = require("../node_modules/node-windows").EventLogger;
 
+
 //Instanciando objetos e declarando/iniciando variáveis
 var router = new Router(),
     server = http.createServer(router),

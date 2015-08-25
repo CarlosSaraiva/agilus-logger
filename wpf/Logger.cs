@@ -12,28 +12,42 @@ namespace AgilusLogger
 {
     public class Logger
     {
+        //events
+        public event EventHandler OnUpdate;
+
+
         //Properties
-        private readonly ObservableCollection<LoggerService> Loggers;
-        public ServiceController SelectedService => ((LoggerService)ListView.SelectedItem).Service;
-        private ListView ListView { get; set; }
-        public int LastSelectedIndex { private get; set; }
         private readonly SolidColorBrush _red = new SolidColorBrush(Color.FromArgb(139, 242, 13, 13));
 
-        public LoggerService SelectedLogger
-        {
-            get { return Loggers.ToList().Find(e => e == (LoggerService) ListView.SelectedItem); }
-        }
+        private readonly ObservableCollection<LoggerService> _loggers;
 
         public Logger(ListView listView)
         {
+            OnUpdate += delegate { };
             ListView = listView;
-            Loggers = new ObservableCollection<LoggerService>();
+            _loggers = new ObservableCollection<LoggerService>();
         }
+
+        public Logger()
+        {
+            OnUpdate += delegate { };
+        }
+
+        public int LastSelectedIndex { private get; set; }
+
+        public LoggerService SelectedLogger
+        {
+            get { return _loggers.ToList().Find(e => e == (LoggerService)ListView.SelectedItem); }
+        }
+
+        public ServiceController SelectedService => ((LoggerService)ListView.SelectedItem).Service;
+
+        private ListView ListView { get; set; }
 
         //Methods
         public void GetServices()
         {
-            Loggers.Clear();
+            _loggers.Clear();
             var services = ServiceController.GetServices().ToList();
             var regex = new Regex(@"^agilus(\w*|\d*/)");
 
@@ -42,27 +56,13 @@ namespace AgilusLogger
                 var match = regex.Match(s.ServiceName);
                 if (match.Success)
                 {
-                    Loggers.Add(new LoggerService(s));
+                    _loggers.Add(new LoggerService(s));
                 }
             });
 
             UpdateServicesListViewItem();
         }
 
-        private void UpdateServicesListViewItem()
-        {
-            ListView.ItemsSource = Loggers;
-            ListView.SelectedIndex = LastSelectedIndex;
-            ListView.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
-        }
-
-        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
-        {
-            if (ListView.ItemContainerGenerator.Status !=                System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated) return;
-            ListView.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, new Action(DelayedAction));
-        }
-        
         void DelayedAction()
         {
             foreach (LoggerService item in ListView.Items)
@@ -72,7 +72,24 @@ namespace AgilusLogger
                 var i = ListView.ItemContainerGenerator.ContainerFromItem(item) as ListBoxItem;
                 if (i != null && !i.Background.Equals(_red))
                     i.Background = _red;
+                    OnUpdate?.Invoke(this, new EventArgs());
             }
         }
+
+        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
+        {
+            if (ListView.ItemContainerGenerator.Status != System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated) return;
+            ListView.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, new Action(DelayedAction));
+        }
+
+        private void UpdateServicesListViewItem()
+        {
+            ListView.ItemsSource = _loggers;
+            ListView.SelectedIndex = LastSelectedIndex;
+            ListView.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
+            
+        }
+
     }
 }
