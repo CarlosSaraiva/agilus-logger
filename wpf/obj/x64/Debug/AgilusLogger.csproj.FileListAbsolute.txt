@@ -17,6 +17,10 @@ C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLog
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.exe
 C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\WpfApplication1.pdb
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\AgilusLogger.exe.config
+<<<<<<< HEAD
+=======
+C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.csprojResolveAssemblyReference.cache
+>>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\MainWindow.baml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\NotificationTray.baml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\App.baml
@@ -33,7 +37,10 @@ C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Hardcode
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Hardcodet.Wpf.TaskbarNotification.xml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.exe
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.pdb
+<<<<<<< HEAD
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.xml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.xml
+=======
+>>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
