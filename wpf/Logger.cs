@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
-using System.Security.AccessControl;
 using System.ServiceProcess;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -14,39 +12,37 @@ namespace AgilusLogger
 {
     public class Logger
     {
-        public readonly ObservableCollection<LoggerService> loggers;
-
-        public ServiceController SelectedService
-        {
-            get { return ((LoggerService) ListView.SelectedItem).Service; }
-        }
-
+        //Properties
+        private readonly ObservableCollection<LoggerService> Loggers;
+        public ServiceController SelectedService => ((LoggerService)ListView.SelectedItem).Service;
         private ListView ListView { get; set; }
         public int LastSelectedIndex { private get; set; }
+        private readonly SolidColorBrush _red = new SolidColorBrush(Color.FromArgb(139, 242, 13, 13));
 
         public LoggerService SelectedLogger
         {
-            get { return loggers.ToList().Find(e => e == (LoggerService) ListView.SelectedItem); }
+            get { return Loggers.ToList().Find(e => e == (LoggerService) ListView.SelectedItem); }
         }
 
         public Logger(ListView listView)
         {
             ListView = listView;
-            loggers = new ObservableCollection<LoggerService>();
+            Loggers = new ObservableCollection<LoggerService>();
         }
 
+        //Methods
         public void GetServices()
         {
-            loggers.Clear();
+            Loggers.Clear();
             var services = ServiceController.GetServices().ToList();
-            Regex regex = new Regex(@"^agilus(\w*|\d*/)");
+            var regex = new Regex(@"^agilus(\w*|\d*/)");
 
             services.ForEach(s =>
             {
-                Match match = regex.Match(s.ServiceName);
+                var match = regex.Match(s.ServiceName);
                 if (match.Success)
                 {
-                    loggers.Add(new LoggerService(s));
+                    Loggers.Add(new LoggerService(s));
                 }
             });
 
@@ -55,31 +51,27 @@ namespace AgilusLogger
 
         private void UpdateServicesListViewItem()
         {
-            ListView.ItemsSource = loggers;
+            ListView.ItemsSource = Loggers;
             ListView.SelectedIndex = LastSelectedIndex;
             ListView.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
         }
 
-        public void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
+        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
         {
-            if (ListView.ItemContainerGenerator.Status == System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated)
-            {
-                ListView.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
-                Dispatcher.CurrentDispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input, new Action(DelayedAction));
-            }
+            if (ListView.ItemContainerGenerator.Status !=                System.Windows.Controls.Primitives.GeneratorStatus.ContainersGenerated) return;
+            ListView.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, new Action(DelayedAction));
         }
         
         void DelayedAction()
         {
             foreach (LoggerService item in ListView.Items)
             {
-                if (item.Status == "Stopped")
-                {
-                    var container = (ListViewItem)ListView.ItemContainerGenerator.ContainerFromItem(item);
-                    var i = ListView.ItemContainerGenerator.ContainerFromItem(item) as ListBoxItem;
-                    if (i != null) i.Background = new SolidColorBrush(Color.FromArgb(139, 77, 27, 27)); 
-                }
-
+                if (item.Status != "Stopped") continue;
+                //var container = (ListViewItem)ListView.ItemContainerGenerator.ContainerFromItem(item);
+                var i = ListView.ItemContainerGenerator.ContainerFromItem(item) as ListBoxItem;
+                if (i != null && !i.Background.Equals(_red))
+                    i.Background = _red;
             }
         }
     }

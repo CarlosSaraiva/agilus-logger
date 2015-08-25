@@ -7,9 +7,9 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="387" RenderTransformOrigin="0.1,-0.74" SelectionChanged="listView_SelectionChanged">
+        <ListView x:Name="ListView" HorizontalAlignment="Left" Height="506" Margin="10,10,0,0" VerticalAlignment="Top" Width="387" RenderTransformOrigin="0.1,-0.74" SelectionChanged="listView_SelectionChanged">
             <ListView.View>
-                <GridView x:Name="gridView">
+                <GridView x:Name="GridView">
                     <GridView.ColumnHeaderContextMenu>
                         <ContextMenu/>
                     </GridView.ColumnHeaderContextMenu>
@@ -20,35 +20,35 @@
             </ListView.View>
         </ListView>
         <Button x:Name="NewButton" Content="New Service" HorizontalAlignment="Left" Margin="413,484,0,0" VerticalAlignment="Top" Width="75" Height="32"/>
-        <TabControl x:Name="tab" HorizontalAlignment="Left" Margin="413,10,0,0" VerticalAlignment="Top" SelectionChanged="tab_SelectionChanged" Height="429">
-            <TabItem x:Name="infoTab" Header="TabItem">
+        <TabControl x:Name="Tab" HorizontalAlignment="Left" Margin="413,10,0,0" VerticalAlignment="Top" SelectionChanged="tab_SelectionChanged" Height="429">
+            <TabItem x:Name="InfoTab" Header="TabItem">
                 <Grid Background="#FFE5E5E5" Margin="0,0,-1,0">
                     <Button x:Name="StopButton" Content="Stop" Margin="107,354,283,27" UseLayoutRounding="False"/>
                     <Button x:Name="RestartButton" Content="Restart" Margin="32,354,364,27"/>
                     <Button x:Name="UninstallButton" Content="Uninstall" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="188,354,0,0" Width="68"/>
-                    <Label x:Name="labelStatus_text" Content="Status:" HorizontalAlignment="Left" Margin="32,60,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="labelName" Content="&#xD;&#xA;" HorizontalAlignment="Center" Margin="188,10,170,344" VerticalAlignment="Center" Width="108" FontWeight="Bold" Height="47" FontSize="16"/>
-                    <Label x:Name="labelStatus" Content="&#xD;&#xA;" HorizontalAlignment="Left" Margin="116,60,0,0" VerticalAlignment="Top" Width="108" Height="26"/>
-                    <Label x:Name="labelServiceName_text" Content="Executável:" HorizontalAlignment="Left" Margin="32,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.421,1.615"/>
-                    <Label x:Name="labelServiceName" Content="" HorizontalAlignment="Left" Margin="115,86,0,0" VerticalAlignment="Top" Width="108"/>
-                    <Label x:Name="labelMachineName_text" Content="Máquina:" HorizontalAlignment="Left" Margin="32,112,0,0" VerticalAlignment="Top" Width="68"/>
-                    <Label x:Name="labelMachineName" Content="" HorizontalAlignment="Left" Margin="116,112,0,0" VerticalAlignment="Top" Width="107"/>
-                    <Label x:Name="labelMachineLifeTime_text" Content="LifeTime" HorizontalAlignment="Left" Margin="33,138,0,0" VerticalAlignment="Top" Width="68"/>
-                    <Label x:Name="labelMachineLifeTime" Content="" HorizontalAlignment="Left" Margin="117,138,0,0" VerticalAlignment="Top" Width="107"/>
+                    <Label x:Name="LabelStatusText" Content="Status:" HorizontalAlignment="Left" Margin="32,60,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="LabelName" Content="&#xD;&#xA;" HorizontalAlignment="Center" Margin="188,10,170,344" VerticalAlignment="Center" Width="108" FontWeight="Bold" Height="47" FontSize="16"/>
+                    <Label x:Name="LabelStatus" Content="&#xD;&#xA;" HorizontalAlignment="Left" Margin="116,60,0,0" VerticalAlignment="Top" Width="108" Height="26"/>
+                    <Label x:Name="LabelServiceNameText" Content="Executável:" HorizontalAlignment="Left" Margin="32,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.421,1.615"/>
+                    <Label x:Name="LabelServiceName" Content="" HorizontalAlignment="Left" Margin="115,86,0,0" VerticalAlignment="Top" Width="108"/>
+                    <Label x:Name="LabelMachineNameText" Content="Máquina:" HorizontalAlignment="Left" Margin="32,112,0,0" VerticalAlignment="Top" Width="68"/>
+                    <Label x:Name="LabelMachineName" Content="" HorizontalAlignment="Left" Margin="116,112,0,0" VerticalAlignment="Top" Width="107"/>
+                    <Label x:Name="LabelMachineLifeTimeText" Content="LifeTime" HorizontalAlignment="Left" Margin="33,138,0,0" VerticalAlignment="Top" Width="68"/>
+                    <Label x:Name="LabelMachineLifeTime" Content="" HorizontalAlignment="Left" Margin="117,138,0,0" VerticalAlignment="Top" Width="107"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="configTab" Header="TabItem">
+            <TabItem x:Name="ConfigTab" Header="TabItem">
                 <Grid Background="#FFE5E5E5" Width="466">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="443*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Nome:" HorizontalAlignment="Left" Margin="71,117,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <TextBox x:Name="serviceName" HorizontalAlignment="Left" Height="23" Margin="145,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                    <TextBox x:Name="ServiceName" HorizontalAlignment="Left" Height="23" Margin="145,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
                     <Button x:Name="InstallButton" Content="Install" HorizontalAlignment="Left" Margin="21,331,0,0" VerticalAlignment="Top" Width="76" Grid.Column="1"/>
                     <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="126,331,0,0" VerticalAlignment="Top" Width="75" Click="CancelButton_Click" Grid.Column="1"/>
                     <Label Content="Porta:&#xA;" HorizontalAlignment="Left" Margin="71,171,0,0" VerticalAlignment="Top" Width="45" Height="27" Grid.Column="1"/>
-                    <TextBox x:Name="servicePort" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="145,175,0,0" Grid.Column="1"/>
+                    <TextBox x:Name="ServicePort" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="145,175,0,0" Grid.Column="1"/>
                 </Grid>
             </TabItem>
         </TabControl>
