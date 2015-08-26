@@ -5,30 +5,7 @@ namespace AgilusLogger
 {
     public class LoggerService : ServiceController
     {
-        public ServiceController Logger;
-
-        private ServiceController _service;
-
-        private string _serviceFolderPath;
-
-        public LoggerService(ServiceController service)
-        {
-            Service = service;
-        }
-
-        public ServiceController Service
-        {
-            get
-            {
-                return _service;
-            }
-
-            private set
-            {
-                ServiceNamePortParser(value.DisplayName);
-                _service = value;
-            }
-        }
+        public int Port { get; set; }
 
         public string ServiceFolderPath
         {
@@ -44,15 +21,19 @@ namespace AgilusLogger
             }
         }
 
-        private string EntityName { get; set; }
+        private string _entityName;
+        public string EntityName { get; private set; }
 
-        private int Port { get; set; }
-
-        override public string ToString()
+        private string _serviceFolderPath;
+        
+        //private readonly ServiceController _service;
+        //Constructor
+        public LoggerService(ServiceController service):base(service.ServiceName)
         {
-            return $"{EntityName} - {Port}";
+            ServiceNamePortParser(service.DisplayName);
         }
-
+        
+        //Methods
         private void ServiceNamePortParser(string displayName)
         {
             var regex = new Regex(@"(?:Agilus\sLogger\s)(?:-\s)(\w*\s)(?:\(porta:\s)(\d*)");
@@ -60,6 +41,11 @@ namespace AgilusLogger
             EntityName = match.Groups[1].Value;
             Port = int.Parse(match.Groups[2].Value);
             ServiceFolderPath = EntityName;
+        }
+
+        override public string ToString()
+        {
+            return $"{EntityName} - {Port}";
         }
     }
 

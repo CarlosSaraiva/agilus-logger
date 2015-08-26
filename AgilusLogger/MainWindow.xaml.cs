@@ -20,13 +20,15 @@ namespace AgilusLogger
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static ServiceManager Manager = new ServiceManager(10000000);
-        private int _counter;
+        private static ServiceManager Manager;
 
         public MainWindow()
         {
-            InitializeComponent();            
-            Manager.OnServiceListUpdated += (o, s) => TextStatus.Text = _counter++.ToString(); 
+            InitializeComponent();
+            Manager = new ServiceManager(1000000, ListView);
+            MessageBox.Show("oi");
+            
+
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
