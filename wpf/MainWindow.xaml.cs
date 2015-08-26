@@ -34,17 +34,16 @@ namespace AgilusLogger
             //ElevateMe();
         }
 
-        private void UpdateText()
-        {
+        //private void UpdateText()
+        //{
             //if (_logger.SelectedLogger == null) return;
             //LabelName.Content = _logger.SelectedLogger.EntityName;
             //LabelStatus.Content = _logger.SelectedLogger.Status;
             //LabelServiceName.Content = _logger.SelectedLogger.Service.ServiceName;
             //LabelMachineName.Content = _logger.SelectedLogger.Service.MachineName;
             //LabelMachineLifeTime.Content = _logger.SelectedLogger.Lifetime;
-        }
+        //}
 
-<<<<<<< HEAD
         //private void InitializeEvents()
         //{
         //    //UpdateLoggerServicesTimer.Tick += (o, s) =>
@@ -85,49 +84,7 @@ namespace AgilusLogger
 
         //    var loggerFiles = Directory.GetFiles("dist\\logger");
         //    var serviceFiles = Directory.GetFiles("dist\\service");
-=======
-        private void InitializeEvents()
-        {
-            UpdateLoggerServicesTimer.Tick += (o, s) =>
-            {
-                _logger.LastSelectedIndex = ListView.SelectedIndex;
-                _logger.GetServices();
-            };
-            UpdateLoggerServicesTimer.Interval = new TimeSpan(0, 0, 0, 0, 1);
-            UpdateLoggerServicesTimer.Start();
-            StopButton.Click += (o, s) => _logger.SelectedService.Stop();
-            ListView.MouseDoubleClick += (o, s) => DescricaoTimer.Start();
-            RestartButton.Click += (o, s) => _logger.SelectedService.Refresh();
-            NewButton.Click += (o, s) => Tab.SelectedItem = ConfigTab;
-            InstallButton.Click += (o, s) => Install();
-            CancelButton.Click += (o, s) => Tab.SelectedItem = InfoTab;
-            UninstallButton.Click += (o, s) => Uninstall();
-            DescricaoTimer.Tick += (o, s) => UpdateText();
-            DescricaoTimer.Interval = new TimeSpan(0, 0, 1);
-            DescricaoTimer.Start();
-            Application.Current.Startup += (o, s) => ElevateMe();
-            _logger.OnUpdate += (o, s) => Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() => MessageBox.Show(@"Serviço Parado")));
-        }
 
-        private void Install()
-        {            
-            var servicePath = Path.Combine(LoggerPath, ServiceName.Text);
-
-            if (!Directory.Exists(LoggerPath))
-            {
-                Directory.CreateDirectory(LoggerPath);
-            }
-
-            if (!Directory.Exists(servicePath))
-            {
-                Directory.CreateDirectory(servicePath);
-                //Directory.CreateDirectory(Path.Combine(servicePath, "daemon"));
-            }
-
-            var loggerFiles = Directory.GetFiles("dist\\logger");
-            var serviceFiles = Directory.GetFiles("dist\\service");
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
-            
         //    foreach (var s in loggerFiles)
         //    {
         //        if (s == null) continue;

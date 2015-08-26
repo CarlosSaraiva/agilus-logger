@@ -7,34 +7,42 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-<<<<<<< HEAD
+
 using static System.Diagnostics.Contracts.Contract;
-=======
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
 
 namespace AgilusLogger
 {
     using static ServiceController;
 
-<<<<<<< HEAD
     public class ServiceManager
-    {
-        private long Ticks { get; }
-        private DispatcherTimer UpdateTimer { get; set; }
-        private ObservableCollection<LoggerInstance> Loggers { get; set; }
-=======
-    class ServiceManager
     {
         public long Ticks { get; }
         private DispatcherTimer UpdateTimer { get; set; }
-        private ObservableCollection<ServiceController> Loggers { get; set; }
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
+        private ObservableCollection<LoggerInstance> Loggers { get; set; }
+        private string _filter;
+        public string Filter
+        {
+            get
+            {
+                return _filter;
+            }
+
+            set
+            {
+                _filter = value;
+            }
+        }
         public event EventHandler OnServiceListUpdated;
+        private Regex _regex;
+
+
 
         public ServiceManager(long ticks)
         {
             Ticks = ticks;  
             SetTimer();
+            Filter = @"(Agilus\sLogger\s)(?: -\s\w *\s)(?:\(porta:\s\d *\))";
+            _regex = new Regex(Filter);
         }
 
         private void SetTimer()
@@ -47,45 +55,29 @@ namespace AgilusLogger
             UpdateTimer.Tick += (o, s) =>
             {
                 Loggers.Clear();
-<<<<<<< HEAD
-                
-=======
-                GetServices().ToList().ForEach(e => Loggers.Add(e));
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
+                GetFilteredServices();
                 OnServiceListUpdated?.Invoke(this, new EventArgs());
             };
 
             UpdateTimer.Start();
         }
 
-<<<<<<< HEAD
-        private void GetLoggersServices()
+        private void GetFilteredServices()
         {
-            GetServices().ToList().ForEach(e =>
-            {
-                if(e.DisplayName == "Agilus")
-                { 
-                    Loggers.Add(new LoggerInstance(e));
-                }
-
-            });
-
+            Loggers = (from service in GetServices().ToList()
+                       let regex = _regex.Match(service.DisplayName)
+                       where regex.Success
+                       select service) as ObservableCollection<LoggerInstance>;
         }
 
-=======
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
         private void GetServiceByName(string name)
         {
             throw new NotImplementedException();
         }
 
-<<<<<<< HEAD
         public List<string> GetLoggersList()
         {
-            Ensures(Result<List<string>>() != null);
             return new List<string>(Loggers.ToList().Select(e => e.ToString()));
         }
-=======
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
     }
 }

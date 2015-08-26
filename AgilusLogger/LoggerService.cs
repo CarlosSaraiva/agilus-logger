@@ -1,13 +1,21 @@
-﻿using System;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 using System.Text.RegularExpressions;
 
 namespace AgilusLogger
 {
-    class LoggerInstance:ServiceController
+    public class LoggerService : ServiceController
     {
-        //private ServiceController _service;
+        public ServiceController Logger;
+
         private ServiceController _service;
+
+        private string _serviceFolderPath;
+
+        public LoggerService(ServiceController service)
+        {
+            Service = service;
+        }
+
         public ServiceController Service
         {
             get
@@ -21,8 +29,7 @@ namespace AgilusLogger
                 _service = value;
             }
         }
-        public ServiceController Logger;
-        private string _serviceFolderPath;
+
         public string ServiceFolderPath
         {
             get
@@ -32,21 +39,18 @@ namespace AgilusLogger
 
             private set
             {
-                
+
                 _serviceFolderPath = value;
             }
         }
-        private string EntityName { get;  set; }
-        private int Port { get;  set; }
-        
 
-        public LoggerInstance(ServiceController service)
-        {
-            Service = service;
-        }
+        private string EntityName { get; set; }
 
-        public LoggerInstance()
+        private int Port { get; set; }
+
+        override public string ToString()
         {
+            return $"{EntityName} - {Port}";
         }
 
         private void ServiceNamePortParser(string displayName)
@@ -57,12 +61,6 @@ namespace AgilusLogger
             Port = int.Parse(match.Groups[2].Value);
             ServiceFolderPath = EntityName;
         }
-
-        override public string ToString()
-        {
-            return $"{EntityName} - {Port}";
-        }
-
     }
 
 }

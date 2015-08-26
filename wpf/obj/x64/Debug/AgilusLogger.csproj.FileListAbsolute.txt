@@ -37,10 +37,18 @@ C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Hardcode
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Hardcodet.Wpf.TaskbarNotification.xml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.exe
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.pdb
-<<<<<<< HEAD
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.xml
 C:\Users\Suporte\Documents\repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.xml
-=======
->>>>>>> 4d94fbc99207fb19bd2054c5bbe0539c63e8d5a9
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\AgilusLogger.exe.config
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\AgilusLogger.exe
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\AgilusLogger.pdb
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.xml
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\bin\x64\Debug\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.xml
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger_MarkupCompile.cache
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.g.resources
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.exe
+C:\Users\Carlos\Documents\Repositories\agilus-logger\wpf\obj\x64\Debug\AgilusLogger.pdb
