@@ -3,9 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace AgilusLogger
 {
+    using static System.IO.Path;
+
     public class LoggerService : ServiceController
     {
-        public int Port { get; set; }
+        public int Port { get; private set; }
+
+        private string _serviceFolderPath;
 
         public string ServiceFolderPath
         {
@@ -16,19 +20,14 @@ namespace AgilusLogger
 
             private set
             {
-
-                _serviceFolderPath = value;
+                _serviceFolderPath = Combine(MainWindow.LoggerPath, value);
             }
         }
-
-        private string _entityName;
-        public string EntityName { get; private set; }
-
-        private string _serviceFolderPath;
         
-        //private readonly ServiceController _service;
+        public string EntityName { get; private set; }
+               
         //Constructor
-        public LoggerService(ServiceController service):base(service.ServiceName)
+        public LoggerService(ServiceController service) : base(service.ServiceName)
         {
             ServiceNamePortParser(service.DisplayName);
         }
