@@ -8,8 +8,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-using static System.Diagnostics.Contracts.Contract;
-
 namespace AgilusLogger
 {
     using static ServiceController;
@@ -33,13 +31,13 @@ namespace AgilusLogger
             }
         }
         public event EventHandler OnServiceListUpdated;
-        private Regex _regex;
+        private readonly Regex _regex;
 
 
 
         public ServiceManager(long ticks)
         {
-            Ticks = ticks;  
+            Ticks = ticks;
             SetTimer();
             Filter = @"(Agilus\sLogger\s)(?: -\s\w *\s)(?:\(porta:\s\d *\))";
             _regex = new Regex(Filter);
@@ -68,11 +66,6 @@ namespace AgilusLogger
                        let regex = _regex.Match(service.DisplayName)
                        where regex.Success
                        select service) as ObservableCollection<LoggerInstance>;
-        }
-
-        private void GetServiceByName(string name)
-        {
-            throw new NotImplementedException();
         }
 
         public List<string> GetLoggersList()

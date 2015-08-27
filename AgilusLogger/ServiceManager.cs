@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CS0472
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,14 +15,15 @@ namespace AgilusLogger
 
     public class ServiceManager
     {
+        //Events
+        public event EventHandler OnServiceListUpdated;
+
+        public event EventHandler OnTick;
+
         //Fields-Properties
         private string _filter;
 
         private readonly Regex _regex;
-
-        public event EventHandler OnServiceListUpdated;
-
-        public event EventHandler OnTick;
 
         private string Filter
         {
@@ -37,40 +40,31 @@ namespace AgilusLogger
 
         private long Ticks { get; }
 
-        public ObservableCollection<LoggerService> Loggers { get; private set; }
-
-        private List<LoggerService> PreviousLoggersList { get; set; }
-
         private DispatcherTimer UpdateTimer { get; set; }
-
-        private ListView _list;
 
         private readonly Queue<IEnumerable<LogItem>> _history;
 
+        public ObservableCollection<LoggerService> Loggers { get; private set; }
+
         //Constructor
-        public ServiceManager(long ticks, ListView listView)
+        public ServiceManager(long ticks)
         {
-            _list = listView;
             Ticks = ticks;            
-            //PreviousLoggersList = new List<LoggerService>();
             Filter = @"Agilus\sLogger\s-\s(\w+|\d+)+\s\(porta:\s\d+\s?\)";
             _regex = new Regex(Filter);
-            SetTimer();
-            
-            Loggers = GetFilteredServices();
-            PreviousLoggersList = new List<LoggerService>();
-            _list.ItemsSource = Loggers;
-            _history = new Queue<IEnumerable<LogItem>>();
-            //BindingOperations.EnableCollectionSynchronization(Loggers, listView.ItemsSource);
+            SetTimer();            
+            Loggers = GetFilteredServices();            
+            _history = new Queue<IEnumerable<LogItem>>();            
         }
 
         //Methods
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0022:Should dispose object", Justification = "<Pending>")]
         private ObservableCollection<LoggerService> GetFilteredServices()
         {
-            var result = (from service in GetServices().ToList()
-                          where _regex.IsMatch(service.DisplayName)
-                          select new LoggerService(service));
+            var result = from service in GetServices().ToList()
+                         where _regex.IsMatch(service.DisplayName)
+                         select new LoggerService(service);
+
             return new ObservableCollection<LoggerService>(result);
         }
 
@@ -88,25 +82,27 @@ namespace AgilusLogger
         private void OnUpdateTimerOnTick(object o, EventArgs s)
         {
             Loggers = GetFilteredServices();
-            bool isEqual;
-            var actual = (from l in Loggers select new LogItem(l.Status.ToString(), l.Port, l.EntityName)).ToArray();            
+            
+            var actual = (
+                from l in Loggers
+                select new LogItem(l.EntityName, l.Port, l.Status.ToString())).ToArray();
 
-            if (_history.Count > 1 && !actual.SequenceEqual(_history.Peek()))
+            if (_history.Count > 0 &&  !actual.SequenceEqual(_history.Last()))
             {
-                OnTick?.Invoke(this, new EventArgs());
+                OnServiceListUpdated?.Invoke(this, new EventArgs());
             }
 
             _history.Enqueue(actual);
-            if (_history.Count >= 20) _history.Dequeue();
-
+            if (_history.Count > 20) _history.Dequeue();
+            OnTick?.Invoke(this, new EventArgs());
         }
     }
 
     public class LogItem:IEquatable<LogItem>
     {
-        public string EntityName { get; set; }       
-        public int Port { get; set; }
-        public string Status { get; set; }
+        private string EntityName { get; set; }
+        private int Port { get; set; }
+        private string Status { get; set; }
 
         public LogItem(string entityName, int port, string status)
         {
@@ -117,21 +113,17 @@ namespace AgilusLogger
 
         public bool Equals(LogItem other)
         {
-            if (Object.ReferenceEquals(other, null)) return false;
-            if (Object.ReferenceEquals(this, other)) return true;
-            return EntityName.Equals(other.EntityName) && Status.Equals(other.Status);
+            if (object.ReferenceEquals(other, null)) return false;
+            if (object.ReferenceEquals(this, other)) return true;
+            return EntityName.Equals(other.EntityName) && Port.Equals(other.Port) && Status.Equals(other.Status);
         }
 
         public override int GetHashCode()
         {
-            int hasEntityName = EntityName?.GetHashCode() ?? 0;
-            int hasPort = Port == null ? 0 : Port.GetHashCode();
-            int hasStatus = Status == null ? 0 : Status.GetHashCode();
-
+            var hasEntityName = EntityName?.GetHashCode() ?? 0;
+            var hasPort = Port == null ? 0: Port.GetHashCode();
+            var hasStatus = Status == null ? 0 : Status.GetHashCode();
             return hasStatus ^ hasPort ^ hasEntityName;
         }
     }
-
 }
-
-

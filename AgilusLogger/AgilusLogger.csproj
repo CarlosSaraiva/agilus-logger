@@ -59,6 +59,7 @@
     <Compile Include="LoggerService.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Node.cs" />
     <Compile Include="ServiceManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
