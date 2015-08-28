@@ -113,13 +113,8 @@ namespace AgilusLogger
 
         public bool Equals(LogItem other)
         {
-<<<<<<< HEAD
-            if (object.ReferenceEquals(other, null)) return false;
-            if (object.ReferenceEquals(this, other)) return true;
-=======
             if (Object.ReferenceEquals(other, null)) return false;
             if (Object.ReferenceEquals(this, other)) return true;
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
             return EntityName.Equals(other.EntityName) && Port.Equals(other.Port) && Status.Equals(other.Status);
         }
 

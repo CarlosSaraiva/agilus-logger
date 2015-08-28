@@ -5,10 +5,7 @@ namespace AgilusLogger
 {
     using static System.IO.Path;
 
-<<<<<<< HEAD
     [System.ComponentModel.DesignerCategory("Code")]
-=======
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
     public class LoggerService : ServiceController
     {
         public int Port { get; private set; }
@@ -27,15 +24,9 @@ namespace AgilusLogger
                 _serviceFolderPath = Combine(MainWindow.LoggerPath, value);
             }
         }
-<<<<<<< HEAD
-
-        public string EntityName { get; private set; }
-
-=======
         
         public string EntityName { get; private set; }
                
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
         //Constructor
         public LoggerService(ServiceController service) : base(service.ServiceName)
         {
