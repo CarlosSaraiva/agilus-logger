@@ -67,7 +67,6 @@ namespace AgilusLogger
                     CreateNoWindow = false,
                     RedirectStandardOutput = true
                 }
-
             };
             {                
                 _process.Start();
