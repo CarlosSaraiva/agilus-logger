@@ -1,56 +1,123 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Authentication.ExtendedProtection;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AgilusLogger
 {
+    using static Directory;
+    using static Path;
+
     public static class Node
     {
         private static Process _process;
 
         public static event EventHandler OnExit;
 
-        private static event EventHandler OnBeginInstall;
+        private static event EventHandler OnBeginProcess;
 
-        public static async Task ExecuteNodeAsync(NodeAction command, object service)
+        public static readonly string LoggerPath = Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
+
+        public static string ServicePath;
+
+        private static NodeAction _command;
+
+        private static string _fileName;
+
+        private static string _flags;
+
+        private static string[] _loggerFiles;
+
+        private static string[] _serviceFiles;
+
+        public static async void SetupNode(NodeAction command, string serviceName, string servicePort)
         {
-            string flags;
+            _command = command;
+            ServicePath = Combine(LoggerPath, serviceName);
 
             switch (command.Id)
             {
                 case 1:
-                    flags = $"-n {service.name} -p {service.port}";
+                    _flags = $"-n {serviceName} -p {servicePort}";
+                    _fileName = $"{LoggerPath}\\{_command.Value}";
+                    await Task.Run(() => ExecuteInstall());
                     break;
 
                 case 2:
-                    flags = $"{service.name}";
+                    _flags = $"delete agiluslogger{serviceName}porta{servicePort}.exe";
+                    _fileName = _command.Value;
+                    await Task.Run(() => ExecuteUninstall());
                     break;
 
                 case 3:
-                    flags = String.Empty;
+                    _flags = String.Empty;
                     break;
 
                 default:
-                    flags = String.Empty;
+                    _flags = String.Empty;
                     break;
             }
+        }
 
+        private static void ExecuteInstall()
+        {
+            if (!Exists(LoggerPath))
+            {
+                CreateDirectory(LoggerPath);
+            }
+
+            if (!Exists(ServicePath))
+            {
+                CreateDirectory(ServicePath);
+            }
+
+            _loggerFiles = GetFiles("dist\\logger");
+            _serviceFiles = GetFiles("dist\\service");
+
+            foreach (var s in _loggerFiles)
+            {
+                if (s == null) continue;
+                var destFile = Path.Combine(LoggerPath, Path.GetFileName(s));
+                File.Copy(s, destFile, true);
+            }
+
+            foreach (var s in _serviceFiles)
+            {
+                if (s == null) continue;
+                var destFile = Path.Combine(ServicePath, Path.GetFileName(s));
+                File.Copy(s, destFile, true);
+            }
+
+            StartProcess();
+        }
+
+        private static void ExecuteUninstall()
+        {
+            StartProcess();
+        }
+
+        private static void StartProcess()
+        {
             _process = new Process
             {
                 StartInfo =
                 {
-                    FileName = Path.Combine(),
-                    Arguments = $"node {command.Value} {flags} ",
+                    FileName = _fileName,
+                    Arguments = _flags,
                     WindowStyle = ProcessWindowStyle.Hidden,
-                    UseShellExecute = false,
+                    UseShellExecute = true,
                     CreateNoWindow = false,
-                    RedirectStandardOutput = true
+                    RedirectStandardOutput = false,
+                    Verb = "runas"
                 }
             };
             {
+                _process.ErrorDataReceived += (o, s) => MessageBox.Show("Erro ocorreu");
+                _process.OutputDataReceived += (o, s) => MessageBox.Show("Tudo certo");
                 _process.Start();
-                OnBeginInstall?.Invoke(null, new EventArgs());
+                OnBeginProcess?.Invoke(null, new EventArgs());
                 OnExit?.Invoke(null, EventArgs.Empty);
             }
         }
@@ -65,8 +132,8 @@ namespace AgilusLogger
         }
 
         public int Id { get; set; }
-        public static NodeAction Install => new NodeAction("Install", 1);
-        public static NodeAction Uninstall => new NodeAction("Uninstall", 2);
+        public static NodeAction Install => new NodeAction("install.cmd", 1);
+        public static NodeAction Uninstall => new NodeAction("sc.exe", 2);
         public static NodeAction Update => new NodeAction(@"Update", 3);
         public string Value { get; set; }
     }

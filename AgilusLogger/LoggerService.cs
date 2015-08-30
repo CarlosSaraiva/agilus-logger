@@ -5,7 +5,7 @@ namespace AgilusLogger
 {
     using static System.IO.Path;
 
-    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignerCategory(@"Code")]
     public class LoggerService : ServiceController
     {
         public int Port { get; private set; }
@@ -24,9 +24,9 @@ namespace AgilusLogger
                 _serviceFolderPath = Combine(MainWindow.LoggerPath, value);
             }
         }
-        
+
         public string EntityName { get; private set; }
-               
+
         //Constructor
         public LoggerService(ServiceController service) : base(service.ServiceName)
         {
@@ -38,7 +38,7 @@ namespace AgilusLogger
         {
             var regex = new Regex(@"(?:Agilus\sLogger\s)(?:-\s)(\w*\s)(?:\(porta:\s)(\d*)");
             var match = regex.Match(displayName);
-            EntityName = match.Groups[1].Value;
+            EntityName = match.Groups[1].Value.Trim();
             Port = int.Parse(match.Groups[2].Value);
             ServiceFolderPath = EntityName;
         }
@@ -48,5 +48,4 @@ namespace AgilusLogger
             return $"{EntityName} - {Port}";
         }
     }
-
 }
