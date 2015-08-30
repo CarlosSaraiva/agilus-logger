@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="AgilusLogger.exe" version="1.0.0.2" publicKeyToken="5ba66b7478cd6b96" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="pen.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="AgilusLogger" version="1.0.0.0" publicKeyToken="5BA66B7478CD6B96" language="neutral" processorArchitecture="msil" />
+    <commandLine file="AgilusLogger.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+             If you want to change the Windows User Account Control level replace the 
+             requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            Specifying requestedExecutionLevel element will disable file and registry virtualization. 
+            Remove this element if your application requires this virtualization for backwards
+            compatibility.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AgilusLogger.exe" size="771504">
+      <assemblyIdentity name="AgilusLogger" version="1.0.0.0" publicKeyToken="5BA66B7478CD6B96" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Su01ddG2lLZY7pMREbgqM/tkg2SAI/MGMZ3+BKHZn/I=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MaterialDesignColors.dll" size="49664">
+      <assemblyIdentity name="MaterialDesignColors" version="1.0.0.41254" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>U4Q9/GAwegFnWhxEelmtRNUhmgNugRsuhToTQBSmZtA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MaterialDesignThemes.Wpf.dll" size="3159552">
+      <assemblyIdentity name="MaterialDesignThemes.Wpf" version="0.0.0.99" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>woi0e4cJuKh5Cav8YGoCdkTfv6z+KsCna1xlw8Da94A=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="AgilusLogger.exe.config" size="184">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>jWVCngsqgsEdPtxOoE7SAK7f6h1++LmE6IqOl8/1R3A=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\logger\agilus.cmd" size="193">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>VdeEaOAyq6W9tEvdVnNgcMMtmqOi4OiuxkMYFHh1H/E=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\logger\install.js" size="1471">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>3UoQkOF/G0dd3S1zSy2sZkwE0mFjJkxsz32uxH1V5W0=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\logger\package.json" size="1187">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>0Pnx6PSbkoJYHbdLQJyohy3aGoUAeCGCmnVKjwhBDSw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\logger\uninstall.cmd" size="197">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Di/bv6pv3EbJCIGjQ5ydV5aoqBzSGsAIbOO7KhhScO8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\logger\uninstall.js" size="472">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WRudUCToVmMVPWuhlh4tbD5Ba8ZwGrkHIatz+d30dXg=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\service\agilus.udl" size="408">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7jTFx84AhkckiffxGzmsRKmrlYSCIXthujsLHQTKuew=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="data\service\agilus-logger.js" size="4423">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rjq+6VgxR+PvL8Ya4RzNgE8f94V9opyVADlsqjjOKpM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="pen.ico" size="370070">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>yCLMB8zamnlbr2DrpfZ/G883IT55y0VV2jzKnKUHu1M=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of the Windows versions that this application has been tested on and is
+           is designed to work with. Uncomment the appropriate elements and Windows will 
+           automatically selected the most compatible environment. -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=MARVIN\Carlos" issuerKeyHash="ccd9875864a2b48279479883977d4e2d178fa0a6" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>R+3uQ8JHWPftBORke9F+SW79+QtZjAOHNHOsfr7QzIw=</DigestValue></Reference></SignedInfo><SignatureValue>C3uW1Ig2SY82VcwFjnLqONvSjJ55rJynYniDoDHQZd7DQehy2124bKC/pbTmVLwp6dM+T7OtHTAN9Tj7bAO+ERcHGWjdEGLPGkB6nJyRKyEyH7fHW5U1lKh2lcd1+83pWpS8HRuV94nluZuYoH9nL03yA+pYs1UcOvqkg5VvbnY=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>uCY4i8n9zlWhDMsZqGyy5Z1gSCEQkPF7WmpB6h6XuTa664Xo39N6dLPRzBPaUGqcMMyxb4eeR4mucE6DuAjOjTBxWddL2FHkGk+sdSrHWwF1zlml/gjfFMt4UrgUmVmIIDpcv0P+c0gjjccPuETy8J7vV1lCmNWRV6VDX5HImJ8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="8cccd0be7eac733487038c590bf9fd6e497ed17b64e404edf75847c243eeed47" Description="" Url=""><as:assemblyIdentity name="AgilusLogger.exe" version="1.0.0.2" publicKeyToken="5ba66b7478cd6b96" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=MARVIN\Carlos</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>FHnKLagQ9G7YsIxqxC+U/VcLYjkLOnxRv89WXu6ZvdY=</DigestValue></Reference></SignedInfo><SignatureValue>igFRz94QSJamZramJCRVK9etPF6CZ9jIaqUzuFOpM6eaJ3AFi7ZlPE613KVDELeS+EhRA3yTP8wS9+5Sp/YNZ3hzESPUND9CDK+le3Tzo27cqXxgeOiL1p06jU62pk27UcCXSPTUZvCDas5ib/WJnR0cGoSHc5wowGCT9hx3IZs=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>uCY4i8n9zlWhDMsZqGyy5Z1gSCEQkPF7WmpB6h6XuTa664Xo39N6dLPRzBPaUGqcMMyxb4eeR4mucE6DuAjOjTBxWddL2FHkGk+sdSrHWwF1zlml/gjfFMt4UrgUmVmIIDpcv0P+c0gjjccPuETy8J7vV1lCmNWRV6VDX5HImJ8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBzTCCATagAwIBAgIQNckWP7od7adESZmJDfDzeTANBgkqhkiG9w0BAQsFADAlMSMwIQYDVQQDHhoATQBBAFIAVgBJAE4AXABDAGEAcgBsAG8AczAeFw0xNTA4MzAwODMyMDlaFw0xNjA4MjkxNDMyMDlaMCUxIzAhBgNVBAMeGgBNAEEAUgBWAEkATgBcAEMAYQByAGwAbwBzMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4JjiLyf3OVaEMyxmobLLlnWBIIRCQ8XtaakHqHpe5Nrrrhejf03p0s9HME9pQapwwzLFvh55Hia5wToO4CM6NMHFZ10vYUeQaT6x1KsdbAXXOWaX+CN8Uy3hSuBSZWYggOly/Q/5zSCONxw+4RPLwnu9XWUKY1ZFXpUNfkciYnwIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAEdaoCG8GDnKsZvJI/Z773q8U5h6zi3iDyzpM8A4yOoiAbbf09EAC9nUaqPZ9e+8Yg1i32wmsKfIuzceHQVEXRpZD5hzzk/wc9jP8e6oUQgRt0UbsOZNE6X/g/P49RobPCbNqRCOt6sbC+zThoFaDLE3wgN+yZX4uCrjlG5SxxBG</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

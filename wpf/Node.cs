@@ -1,102 +1,139 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-<<<<<<< HEAD
-using System.Net.Sockets;
-=======
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace AgilusLogger
 {
-<<<<<<< HEAD
-    public class NodeAction
-    {
-        private NodeAction(string value)
-        {
-            Value = value;
-        }
-
-        public string Value { get; set; }
-
-        public static NodeAction Install => new NodeAction("Install");
-
-        public static NodeAction Uninstall => new NodeAction("Uninstall");
-
-        public static NodeAction Update => new NodeAction(@"Update");
-=======
-    public enum NodeAction
-    {
-        Install,
-        Uninstall,
-        Update
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
-    }
+    using static Directory;
+    using static Path;
 
     public static class Node
     {
         private static Process _process;
-        public static event EventHandler OnInstallBegin;
-<<<<<<< HEAD
-        public static event EventHandler OnInstallFinished
+
+        public static event EventHandler OnExit;
+
+        private static event EventHandler OnBeginProcess;
+
+        public static readonly string LoggerPath = Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
+
+        public static string ServicePath;
+
+        private static NodeAction _command;
+
+        private static string _fileName;
+
+        private static string _flags;
+
+        private static string[] _loggerFiles;
+
+        private static string[] _serviceFiles;
+
+        public static async void SetupNode(NodeAction command, string serviceName, string servicePort)
         {
-            add { _process.Exited += value; }
-            remove { _process.Exited -= value; }
+            _command = command;
+            ServicePath = Combine(LoggerPath, serviceName);
+
+            switch (command.Id)
+            {
+                case 1:
+                    _flags = $"-n {serviceName} -p {servicePort}";
+                    _fileName = $"{LoggerPath}\\{_command.Value}";
+                    await Task.Run(() => ExecuteInstall());
+                    break;
+
+                case 2:
+                    _flags = $"delete agiluslogger{serviceName}porta{servicePort}.exe";
+                    _fileName = _command.Value;
+                    await Task.Run(() => ExecuteUninstall());
+                    break;
+
+                case 3:
+                    _flags = String.Empty;
+                    break;
+
+                default:
+                    _flags = String.Empty;
+                    break;
+            }
         }
 
-        public static void ExecuteNode(NodeAction command, LoggerSer arguments)
+        private static void ExecuteInstall()
         {
-            switch (command)
+            if (!Exists(LoggerPath))
             {
-                case: NodeAction.Install
-
+                CreateDirectory(LoggerPath);
             }
 
+            if (!Exists(ServicePath))
+            {
+                CreateDirectory(ServicePath);
+            }
 
+            _loggerFiles = GetFiles("dist\\logger");
+            _serviceFiles = GetFiles("dist\\service");
 
+            foreach (var s in _loggerFiles)
+            {
+                if (s == null) continue;
+                var destFile = Path.Combine(LoggerPath, Path.GetFileName(s));
+                File.Copy(s, destFile, true);
+            }
 
-=======
-        public static event EventHandler OnInstallFinished;
+            foreach (var s in _serviceFiles)
+            {
+                if (s == null) continue;
+                var destFile = Path.Combine(ServicePath, Path.GetFileName(s));
+                File.Copy(s, destFile, true);
+            }
 
-        public static void ExecuteNode(NodeAction command)
+            StartProcess();
+        }
+
+        private static void ExecuteUninstall()
         {
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
+            StartProcess();
+        }
+
+        private static void StartProcess()
+        {
             _process = new Process
             {
                 StartInfo =
                 {
-                    FileName = "",
-<<<<<<< HEAD
-                    Arguments = $"node {command} ",
-=======
-                    Arguments = "",
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
+                    FileName = _fileName,
+                    Arguments = _flags,
                     WindowStyle = ProcessWindowStyle.Hidden,
-                    UseShellExecute = false,
+                    UseShellExecute = true,
                     CreateNoWindow = false,
-                    RedirectStandardOutput = true
+                    RedirectStandardOutput = false,
+                    Verb = "runas"
                 }
-                
             };
             {
+                _process.ErrorDataReceived += (o, s) => MessageBox.Show("Erro ocorreu");
+                _process.OutputDataReceived += (o, s) => MessageBox.Show("Tudo certo");
                 _process.Start();
-<<<<<<< HEAD
-                OnInstallBegin?.Invoke(null, new EventArgs());
-                _process.WaitForExit();
-                OnInstallFinished?.Invoke(null, new EventArgs());
-=======
-                OnInstallBegin?.Invoke(this, new EventArgs());
-                _process.WaitForExit();
-                OnInstallFinished?.Invoke(this, new EventArgs());
->>>>>>> b586ab3399de4ef659956f2496229a632fbad652
+                OnBeginProcess?.Invoke(null, new EventArgs());
+                OnExit?.Invoke(null, EventArgs.Empty);
             }
+        }
+    }
 
-
-            
+    public class NodeAction
+    {
+        private NodeAction(string value, int id)
+        {
+            Value = value;
+            Id = id;
         }
 
-
+        public int Id { get; set; }
+        public static NodeAction Install => new NodeAction("install.cmd", 1);
+        public static NodeAction Uninstall => new NodeAction("sc.exe", 2);
+        public static NodeAction Update => new NodeAction(@"Update", 3);
+        public string Value { get; set; }
     }
 }

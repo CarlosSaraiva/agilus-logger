@@ -1,0 +1,48 @@
+{
+  "name": "agilus-logger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "agilus-logger.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CarlosSaraiva/agilus-logger"
+  },
+  "keywords": [
+    "agilus",
+    "node"
+  ],
+  "author": "Carlos Saraiva <carlos.saraiva@msn.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarlosSaraiva/agilus-logger/issues"
+  },
+  "homepage": "https://github.com/CarlosSaraiva/agilus-logger",
+  "dependencies": {
+    "fs": "0.0.2",
+    "http": "0.0.0",
+    "minimist": "^1.1.2",
+    "mssql": "^2.1.2",
+    "node-simple-router": "^0.9.4-2",
+    "node-windows": "^0.1.7",
+    "path": "^0.11.14",
+    "xml2js": "^0.4.10"
+  },
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-copy": "0.0.2",
+    "gulp-inject": "^1.5.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-livereload": "^3.8.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-replace-path": "^0.4.0",
+    "gulp-uglify": "^1.2.0",
+    "gulp-watch": "^4.3.4",
+    "gulp-wrap-commonjs": "^0.1.13"
+  }
+}
