@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace AgilusLogger
 {
@@ -35,19 +36,22 @@ namespace AgilusLogger
         {
             _command = command;
             ServicePath = Combine(LoggerPath, serviceName);
-
+            OnBeginProcess?.Invoke(null, new EventArgs());
             switch (command.Id)
             {
                 case 1:
                     _flags = $"-n {serviceName} -p {servicePort}";
                     _fileName = $"{LoggerPath}\\{_command.Value}";
                     await Task.Run(() => ExecuteInstall());
+                    await Task.Run(() => UpdateNpm());
+                    OnExit?.Invoke(null, new EventArgs());
                     break;
 
                 case 2:
                     _flags = $"delete agiluslogger{serviceName}porta{servicePort}.exe";
                     _fileName = _command.Value;
                     await Task.Run(() => ExecuteUninstall());
+                    OnExit?.Invoke(null, new EventArgs());
                     break;
 
                 case 3:
@@ -116,9 +120,24 @@ namespace AgilusLogger
                 _process.ErrorDataReceived += (o, s) => MessageBox.Show("Erro ocorreu");
                 _process.OutputDataReceived += (o, s) => MessageBox.Show("Tudo certo");
                 _process.Start();
-                OnBeginProcess?.Invoke(null, new EventArgs());
-                OnExit?.Invoke(null, EventArgs.Empty);
             }
+        }
+
+        private static void UpdateNpm()
+        {
+            var update = new Process
+            {
+                StartInfo =
+                {
+                    FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),$"npm\\npm.cmd"),
+                    Arguments = $"install -p {LoggerPath}",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    UseShellExecute = false,
+                    CreateNoWindow = false,
+                    RedirectStandardOutput = false,
+                    Verb = "runas"
+                }
+            };
         }
     }
 

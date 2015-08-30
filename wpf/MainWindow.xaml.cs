@@ -31,6 +31,8 @@ namespace AgilusLogger
             ListView.ItemsSource = _manager.Loggers;
             CancelButton.Click += (o, s) => Tab.SelectedItem = InfoTab;
             NewButton.Click += (o, s) => Tab.SelectedItem = ConfigTab;
+            OnExit += (o, s) => TextBlock.Text = "Processo finalizado";
+            StopButton.Click += (o, s) => (ListView.Items.GetItemAt(ListView.SelectedIndex) as LoggerService)?.Stop();
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
@@ -42,7 +44,7 @@ namespace AgilusLogger
                     foreach (var item in _manager.GetStoppedServices)
                     {
                         var listItem = ListView.ItemContainerGenerator.ContainerFromItem(item) as ListViewItem;
-                        if (listItem != null) listItem.Background = new SolidColorBrush(Color.FromArgb(242, 244, 59, 59));
+                        if (listItem != null) listItem.Background = new SolidColorBrush(Color.FromArgb(124, 244, 59, 59));
                     }
                 }));
             }
@@ -56,7 +58,7 @@ namespace AgilusLogger
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
             SetupNode(NodeAction.Install, ServiceNameField.Text, ServicePortField.Text);
-            textBlock.Text = "Instalando";
+            TextBlock.Text = "Instalando";
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
