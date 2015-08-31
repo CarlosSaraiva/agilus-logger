@@ -25,6 +25,7 @@ namespace AgilusLogger
         private readonly Regex _regex;
 
         private string Filter { get; }
+
         private long Ticks { get; }
 
         private DispatcherTimer UpdateTimer { get; set; }

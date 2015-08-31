@@ -8,6 +8,8 @@ using System.Windows.Threading;
 
 namespace AgilusLogger
 {
+    using System.Net;
+    using System.Threading.Tasks;
     using static Node;
     using static Path;
 
@@ -32,7 +34,46 @@ namespace AgilusLogger
             CancelButton.Click += (o, s) => Tab.SelectedItem = InfoTab;
             NewButton.Click += (o, s) => Tab.SelectedItem = ConfigTab;
             OnExit += (o, s) => TextBlock.Text = "Processo finalizado";
-            StopButton.Click += (o, s) => (ListView.Items.GetItemAt(ListView.SelectedIndex) as LoggerService)?.Stop();
+
+            StopButton.Click += (o, s) => { 
+                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
+
+                if(selected != null && selected.CanStop)
+                {
+                    selected.Stop();
+                }
+
+            };  
+
+            RestartButton.Click += (o, s) =>
+            {
+                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex)as LoggerService;
+
+                if (selected.CanPauseAndContinue && selected != null)
+                {
+                    selected.Pause();
+                    selected.Continue();
+                }
+
+                if (!selected.CanStop)
+                {
+                    selected.Start();
+                }
+                else
+                {
+                    RestartService(selected);                    
+                    TextBlock.Text = "Parando Serviço";
+                }
+            };
+            
+        }
+
+    private async void RestartService(LoggerService selected)
+        {
+            selected.Stop();
+            await Task.Run(() => selected.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Stopped));
+            selected.Start();
+            TextBlock.Text = "Serviço Reiniciado";
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)

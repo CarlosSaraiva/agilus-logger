@@ -55,11 +55,11 @@ namespace AgilusLogger
                     break;
 
                 case 3:
-                    _flags = String.Empty;
+                    _flags = string.Empty;
                     break;
 
                 default:
-                    _flags = String.Empty;
+                    _flags = string.Empty;
                     break;
             }
         }

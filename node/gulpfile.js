@@ -16,19 +16,19 @@ gulp.task("flat", function (cb) {
 gulp.task("build", function () {
     gulp.src("./package.json")
         .pipe(gulp.dest("./build/logger"))
-        .pipe(gulp.dest("../AgilusLogger/bin/x64/Debug/dist/logger/"))
-        .pipe(gulp.dest("../AgilusLogger/bin/Debug/dist/logger/"))
+        .pipe(gulp.dest("../wpf/bin/x64/Debug/dist/logger/"))
+        .pipe(gulp.dest("../wpf/bin/Debug/dist/logger/"))
         .pipe(gulp.dest(process.env.appData + "/agilus-logger/"));
 
     gulp.src([srcPath + "install.js", srcPath + "uninstall.js", srcPath +"/*.cmd"])
         .pipe(replace(/..\/node_modules\//g, ""))
         .pipe(gulp.dest("./build/logger"))
-        .pipe(gulp.dest("../AgilusLogger/bin/x64/Debug/dist/logger"))
-        .pipe(gulp.dest("../AgilusLogger/bin/Debug/dist/logger"))
+        .pipe(gulp.dest("../wpf/bin/x64/Debug/dist/logger"))
+        .pipe(gulp.dest("../wpf/bin/Debug/dist/logger"))
         .pipe(gulp.dest(process.env.appData + "/agilus-logger/"));
 
     gulp.src([srcPath + "agilus-logger.js", srcPath + "agilus.udl"])
         .pipe(gulp.dest("./build/service"))
-        .pipe(gulp.dest("../AgilusLogger/bin/x64/Debug/dist/service"))
-        .pipe(gulp.dest("../AgilusLogger/bin/Debug/dist/service"));
+        .pipe(gulp.dest("../wpf/bin/x64/Debug/dist/service"))
+        .pipe(gulp.dest("../wpf/bin/Debug/dist/service"));
 });
