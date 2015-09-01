@@ -63,17 +63,31 @@ namespace AgilusLogger
                 {
                     RestartService(selected);                    
                     TextBlock.Text = "Parando Serviço";
+                    
                 }
             };
             
         }
 
-    private async void RestartService(LoggerService selected)
+        private async void RestartService(LoggerService selected)
         {
             selected.Stop();
             await Task.Run(() => selected.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Stopped));
             selected.Start();
-            TextBlock.Text = "Serviço Reiniciado";
+            Task<string> task = new Task<string>(test);
+            task.Start();
+            TextBlock.Text = "Serviço Reiniciado";           
+            var texto = await task.ConfigureAwait(false);
+        }
+
+        private string test()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                
+            }
+
+            return "done";
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
