@@ -16,7 +16,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
+    <Install>false</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
@@ -25,8 +25,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://localhost/AgilusLogger/</UpdateUrl>
     <ProductName>Agilus Logger</ProductName>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -57,10 +58,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
+    <TargetZone>Custom</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -156,8 +157,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="..\node\build\logger\uninstall.cmd">
-      <Link>dist\logger\uninstall.cmd</Link>
+    <Content Include="..\node\build\logger\install.js">
+      <Link>dist\logger\install.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\node\build\logger\uninstall.js">
+      <Link>dist\logger\uninstall.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\node\build\service\agilus.udl">
@@ -166,6 +171,15 @@
     </Content>
     <None Include="..\node\build\logger\install.cmd">
       <Link>dist\logger\install.cmd</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\node\build\logger\package.json">
+      <Link>dist\logger\package.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\node\build\logger\uninstall.cmd">
+      <Link>dist\logger\uninstall.cmd</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="AgilusLogger_TemporaryKey.pfx" />
     <None Include="app.manifest">
@@ -198,18 +212,6 @@
     <Resource Include="pen.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\node\build\logger\install.js">
-      <Link>dist\logger\install.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\node\build\logger\package.json">
-      <Link>dist\logger\package.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\node\build\logger\uninstall.js">
-      <Link>dist\logger\uninstall.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\node\build\service\agilus-logger.js">
       <Link>dist\service\agilus-logger.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

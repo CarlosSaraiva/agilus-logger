@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
+using System.Security;
 
 namespace AgilusLogger
 {
@@ -130,15 +131,16 @@ namespace AgilusLogger
                 StartInfo =
                 {
                     FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),$"npm\\npm.cmd"),
-                    Arguments = $"install -p {LoggerPath}",
+                    Arguments = $"install --prefix {LoggerPath}",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     UseShellExecute = false,
                     CreateNoWindow = false,
                     RedirectStandardOutput = false,
                     Verb = "runas"
                 }
-            };
+            }.Start();
         }
+
     }
 
     public class NodeAction
