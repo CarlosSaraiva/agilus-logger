@@ -45,6 +45,7 @@ namespace AgilusLogger
                     _fileName = $"{LoggerPath}\\{_command.Value}";
                     await Task.Run(() => ExecuteInstall());
                     await Task.Run(() => UpdateNpm());
+                    await Task.Run(() => StartProcess());
                     OnExit?.Invoke(null, new EventArgs());
                     break;
 
@@ -94,7 +95,6 @@ namespace AgilusLogger
                 File.Copy(s, destFile, true);
             }
 
-            StartProcess();
         }
 
         private static void ExecuteUninstall()
