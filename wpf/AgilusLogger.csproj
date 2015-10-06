@@ -218,6 +218,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\ic_warning_black_24dp\web\" />
     <Folder Include="reports\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
