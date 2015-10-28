@@ -33,12 +33,6 @@ namespace AgilusLogger
 
         private static string[] _serviceFiles;
 
-        /// <summary>
-        /// Setups the node.
-        /// </summary>
-        /// <param name="command">The command.</param>
-        /// <param name="serviceName">Name of the service.</param>
-        /// <param name="servicePort">The service port.</param>
         public static async void SetupNode(NodeAction command, string serviceName, string servicePort)
         {
             _command = command;
@@ -65,14 +59,14 @@ namespace AgilusLogger
                     break;
             }
 
-            await Task.Run(() => PrepareInstall());
+            PrepareInstall();
 
             if (command.Id == 1)
             {
-                await Task.Run(() => UpdateNpm());
+                UpdateNpm();
             }
 
-            OnExit?.Invoke(null, new MessageEventArgs(await Task.Run(() => StartProcess())));
+            OnExit?.Invoke(null, new MessageEventArgs(StartProcess()));
         }
 
         private static void PrepareInstall()
