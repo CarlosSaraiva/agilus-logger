@@ -1,6 +1,8 @@
 node_modules
 daemon
-node/source/agilus.udl
+node/build/service
+node/src/agilus.udl
+wpf/bin
 bin
 obj
 agilus-logger.sln.DotSettings.user

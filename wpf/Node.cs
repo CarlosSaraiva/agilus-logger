@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
@@ -14,7 +15,7 @@ namespace AgilusLogger
     {
         private static Process _process;
 
-        public static event EventHandler OnExit;
+        public static event EventHandler<MessageEventArgs> OnExit;
 
         private static event EventHandler OnBeginProcess;
 
@@ -42,16 +43,11 @@ namespace AgilusLogger
                 case 1:
                     _flags = $"-n {serviceName} -p {servicePort}";
                     _fileName = $"{LoggerPath}\\{_command.Value}";
-                    await Task.Run(() => ExecuteInstall());
-                    await Task.Run(() => UpdateNpm());
-                    OnExit?.Invoke(null, new EventArgs());
                     break;
 
                 case 2:
                     _flags = $"delete agiluslogger{serviceName}porta{servicePort}.exe";
                     _fileName = _command.Value;
-                    await Task.Run(() => ExecuteUninstall());
-                    OnExit?.Invoke(null, new EventArgs());
                     break;
 
                 case 3:
@@ -62,9 +58,18 @@ namespace AgilusLogger
                     _flags = string.Empty;
                     break;
             }
+
+            PrepareInstall();
+
+            if (command.Id == 1)
+            {
+                UpdateNpm();
+            }
+
+            OnExit?.Invoke(null, new MessageEventArgs(StartProcess()));
         }
 
-        private static void ExecuteInstall()
+        private static void PrepareInstall()
         {
             if (!Exists(LoggerPath))
             {
@@ -92,16 +97,9 @@ namespace AgilusLogger
                 var destFile = Path.Combine(ServicePath, Path.GetFileName(s));
                 File.Copy(s, destFile, true);
             }
-
-            StartProcess();
         }
 
-        private static void ExecuteUninstall()
-        {
-            StartProcess();
-        }
-
-        private static void StartProcess()
+        private static string StartProcess()
         {
             _process = new Process
             {
@@ -110,17 +108,16 @@ namespace AgilusLogger
                     FileName = _fileName,
                     Arguments = _flags,
                     WindowStyle = ProcessWindowStyle.Hidden,
-                    UseShellExecute = true,
+                    UseShellExecute = false,
                     CreateNoWindow = false,
-                    RedirectStandardOutput = false,
+                    RedirectStandardOutput = true,
                     Verb = "runas"
                 }
             };
             {
-                _process.ErrorDataReceived += (o, s) => MessageBox.Show("Erro ocorreu");
-                _process.OutputDataReceived += (o, s) => MessageBox.Show("Tudo certo");
                 _process.Start();
             }
+            return _process.StandardOutput.ReadToEnd();
         }
 
         private static void UpdateNpm()
@@ -130,14 +127,24 @@ namespace AgilusLogger
                 StartInfo =
                 {
                     FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),$"npm\\npm.cmd"),
-                    Arguments = $"install -p {LoggerPath}",
+                    Arguments = $"install --prefix {LoggerPath}",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     UseShellExecute = false,
                     CreateNoWindow = false,
                     RedirectStandardOutput = false,
                     Verb = "runas"
                 }
-            };
+            }.Start();
+        }
+    }
+
+    public class MessageEventArgs : EventArgs
+    {
+        public string Message { get; set; }
+
+        public MessageEventArgs(string message)
+        {
+            Message = message;
         }
     }
 

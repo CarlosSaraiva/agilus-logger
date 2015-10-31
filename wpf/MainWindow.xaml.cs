@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -10,6 +11,7 @@ namespace AgilusLogger
 {
     using System.Net;
     using System.Threading.Tasks;
+    using static Dispatcher;
     using static Node;
     using static Path;
 
@@ -33,21 +35,21 @@ namespace AgilusLogger
             ListView.ItemsSource = _manager.Loggers;
             CancelButton.Click += (o, s) => Tab.SelectedItem = InfoTab;
             NewButton.Click += (o, s) => Tab.SelectedItem = ConfigTab;
-            OnExit += (o, s) => TextBlock.Text = "Processo finalizado";
+            OnExit += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = s.Message));
 
-            StopButton.Click += (o, s) => { 
+            StopButton.Click += (o, s) =>
+            {
                 var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
 
-                if(selected != null && selected.CanStop)
+                if (selected != null && selected.CanStop)
                 {
                     selected.Stop();
                 }
-
-            };  
+            };
 
             RestartButton.Click += (o, s) =>
             {
-                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex)as LoggerService;
+                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
 
                 if (selected.CanPauseAndContinue && selected != null)
                 {
@@ -57,16 +59,21 @@ namespace AgilusLogger
 
                 if (!selected.CanStop)
                 {
-                    selected.Start();
+                    try
+                    {
+                        selected.Start();
+                    }
+                    catch (InvalidOperationException exception)
+                    {
+                        TextBlock.Text = exception.Message;
+                    }
                 }
                 else
                 {
-                    RestartService(selected);                    
+                    RestartService(selected);
                     TextBlock.Text = "Parando Serviço";
-                    
                 }
             };
-            
         }
 
         private async void RestartService(LoggerService selected)
@@ -74,20 +81,7 @@ namespace AgilusLogger
             selected.Stop();
             await Task.Run(() => selected.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Stopped));
             selected.Start();
-            Task<string> task = new Task<string>(test);
-            task.Start();
-            TextBlock.Text = "Serviço Reiniciado";           
-            var texto = await task.ConfigureAwait(false);
-        }
-
-        private string test()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                
-            }
-
-            return "done";
+            TextBlock.Text = "Serviço Reiniciado";
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
