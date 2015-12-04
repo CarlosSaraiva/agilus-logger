@@ -126,7 +126,7 @@ namespace AgilusLogger
             {
                 StartInfo =
                 {
-                    FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),$"npm\\npm.cmd"),
+                    FileName = "C:\\Program Files\\nodejs\\npm.cmd",
                     Arguments = $"install --prefix {LoggerPath}",
                     WindowStyle = ProcessWindowStyle.Hidden,
                     UseShellExecute = false,
