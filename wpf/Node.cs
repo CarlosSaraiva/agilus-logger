@@ -8,6 +8,8 @@ using System.Windows.Navigation;
 
 namespace AgilusLogger
 {
+    using System.Reflection;
+    using System.Security.Principal;
     using static Directory;
     using static Path;
 
@@ -101,23 +103,24 @@ namespace AgilusLogger
 
         private static string StartProcess()
         {
+
             _process = new Process
             {
                 StartInfo =
                 {
                     FileName = _fileName,
-                    Arguments = _flags,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    UseShellExecute = false,
-                    CreateNoWindow = false,
-                    RedirectStandardOutput = true,
+                    Arguments = _flags,                    
                     Verb = "runas"
                 }
             };
             {
                 _process.Start();
+                _process.WaitForExit();
             }
-            return _process.StandardOutput.ReadToEnd();
+
+
+
+            return "Process initializdaojkfeapj";
         }
 
         private static void UpdateNpm()
@@ -134,8 +137,13 @@ namespace AgilusLogger
                     RedirectStandardOutput = false,
                     Verb = "runas"
                 }
-            }.Start();
+            };
+            {                
+                update.Start();
+                update.WaitForExit();
+            };
         }
+
     }
 
     public class MessageEventArgs : EventArgs
