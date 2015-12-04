@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
     <PublishUrlHistory>C:\inetpub\wwwroot\agilus-logger\|C:\Users\Suporte\Desktop\|publish\</PublishUrlHistory>
-    <InstallUrlHistory>http://192.168.1.20/agilus-logger/publish.htm/</InstallUrlHistory>
+    <InstallUrlHistory>http://192.168.1.20/agilus-logger/|http://192.168.1.20/agilus-logger/publish.htm/</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory>http://localhost/AgilusLogger/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
