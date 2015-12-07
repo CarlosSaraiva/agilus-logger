@@ -70,20 +70,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>582AC8763B03A3175A8966F5B9C661928AD88A31</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B729DEAD83DDD17DEEE7EA4B96A9A289EC99E00B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AgilusLogger_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>CarlosSaraiva.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>pen.ico</ApplicationIcon>
@@ -157,6 +157,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="pen.ico" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -188,6 +189,7 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="CarlosSaraiva.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -210,9 +212,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="pen.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\node\build\service\agilus-logger.js">

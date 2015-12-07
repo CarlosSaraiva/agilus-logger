@@ -28,6 +28,7 @@ namespace AgilusLogger
 
         public static readonly string LoggerPath = Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "agilus-logger");
 
+        /// <exception cref="Win32Exception">An error occurred when accessing a system API. </exception>
         public MainWindow()
         {
             InitializeComponent();
@@ -46,45 +47,60 @@ namespace AgilusLogger
             OnFailure += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = s.Message));
 
             StopButton.Click += (o, s) =>
-            {
-                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
-
+            {                
                 try
                 {
-                    if (selected.CanStop || selected != null)
-                    {
-                        selected.Stop();
-                    }
+                    var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
+                    selected?.Stop();
+                }
+                catch (ArgumentOutOfRangeException argumentOutOfRangeException)
+                {                    
+                    TextBlock.Text = $"Nenhum item selecionado! ({argumentOutOfRangeException.Message})";
                 }
                 catch (Win32Exception win32Exception)
                 {
                     TextBlock.Text = "Problemas ao interromper o serviço: " + win32Exception.Message;
                 }
+                catch (InvalidOperationException invalidOperationException)
+                {
+                    TextBlock.Text = $"Acesso negado: {invalidOperationException.Message}";
+                }
             };
 
             RestartButton.Click += (o, s) =>
-            {
-                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
-
-                if (selected.CanPauseAndContinue)
+            {               
+                try
                 {
-                    selected.Pause();
-                    selected.Continue();
-                }else if (!selected.CanStop)
-                {
-                    try
+                    var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
+                    if (selected != null && selected.CanPauseAndContinue)
                     {
-                        selected.Start();
+                        selected.Pause();
+                        selected.Continue();
                     }
-                    catch (InvalidOperationException exception)
+                    else if (selected != null && !selected.CanStop)
                     {
-                        TextBlock.Text = exception.Message;
+                        try
+                        {
+                            selected.Start();
+                        }
+                        catch (InvalidOperationException exception)
+                        {
+                            TextBlock.Text = exception.Message;
+                        }
+                    }
+                    else
+                    {
+                        RestartService(selected);
+                        TextBlock.Text = "Reiniciando Serviço";
                     }
                 }
-                else
+                catch (InvalidOperationException invalidOperationException)
                 {
-                    RestartService(selected);
-                    TextBlock.Text = "Reiniciando Serviço";
+                    TextBlock.Text = $"Operação inválida: {invalidOperationException.Message}";
+                }
+                catch (ArgumentOutOfRangeException argumentOutOfRangeException)
+                {
+                    TextBlock.Text = $"Nenhum item selecionado! ({argumentOutOfRangeException.Message})";
                 }
             };
         }
@@ -148,7 +164,16 @@ namespace AgilusLogger
 
         private void UninstallButton_Click(object sender, RoutedEventArgs e)
         {
-            SetupNode(NodeAction.Uninstall, (ListView.Items.CurrentItem as LoggerService).EntityName, (ListView.Items.CurrentItem as LoggerService).Port.ToString());
+            var loggerService = ListView.Items.CurrentItem as LoggerService;
+            if (loggerService != null)
+            {
+                SetupNode(NodeAction.Uninstall, loggerService.EntityName, loggerService.Port.ToString());
+            }
+            else
+            {
+                TextBlock.Text = "Nenhum item selecionado!";
+            }
+                
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)

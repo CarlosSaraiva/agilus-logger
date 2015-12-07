@@ -151,7 +151,7 @@ namespace AgilusLogger
                     Verb = "runas"
                 }
             };
-            {                  
+            {
                 update.Start();
                 update.WaitForExit();
             }

@@ -10,8 +10,8 @@ using System.Windows;
 [assembly: AssemblyTitle("Agilus Logger")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AgilusLogger")]
+[assembly: AssemblyCompany("Agilus")]
+[assembly: AssemblyProduct("Agilus Logger")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -53,3 +53,5 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("pt-BR")]
+
