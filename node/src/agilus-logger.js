@@ -12,7 +12,8 @@ var router = new Router(),
     server = http.createServer(router),
     log = new EventLogger("Agilus Logger"),
     tabela = "insert ligacao_telefonica(lit_nome_empresa, lit_data, lit_origem, lit_destino, lit_duracao_total, lit_duracao_conversacao, lit_status, lit_identificador_gravacao, lit_codigo_agilus)",
-    connectionString, connectionErrorFlag;
+    connectionString, connectionErrorFlag,
+    nomeSistemaTelefonia = "VCOM";
 
 //Variaveis do usuario
 var port = process.env.port,
@@ -64,7 +65,7 @@ function readUDL(file, callback) {
 
 //Monta a string do insert que sera executado no banco de dados
 function insertString(request) {
-    var values = "'" + request.body.nome + "'," +
+    var values = "'" + nomeSistemaTelefonia + "'," +
         "'" + request.body.calldate + "'," +
         "'" + request.body.src + "'," +
         "'" + request.body.dst + "'," +

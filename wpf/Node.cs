@@ -31,7 +31,6 @@ namespace AgilusLogger
         private static string[] _loggerFiles;
         private static string[] _serviceFiles;
 
-        /// <exception cref="Exception">A delegate callback throws an exception.</exception>
         public static void SetupNode(NodeAction command, string serviceName, string servicePort)
         {
             string message = null;
