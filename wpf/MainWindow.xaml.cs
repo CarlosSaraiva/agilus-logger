@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net.Mime;
 using System.Windows;
@@ -10,7 +11,7 @@ using System.Windows.Threading;
 namespace AgilusLogger
 {
     using System.Diagnostics;
-    using System.Net;
+    
     using System.Reflection;
     using System.Security.Principal;
     using System.Threading.Tasks;
@@ -30,7 +31,66 @@ namespace AgilusLogger
         public MainWindow()
         {
             InitializeComponent();
+            IsAdministrator();
+            OnBeginProcess += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = s.Message));
+            _manager = new ServiceManager(1000000);
+            _manager.OnServiceListUpdated += (o, s) => ListView.ItemsSource = _manager.Loggers;
+            InstallButton.Click += InstallButton_Click;
+            UninstallButton.Click += UninstallButton_Click;
+            ListView.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
+            ListView.ItemsSource = _manager.Loggers;
 
+            OnBeginProcess += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = "Inicio da instalação..."));
+            OnNpm += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = "NPM esta atualizando módulos!"));
+            OnExit += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = s.Message));
+            OnFailure += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = s.Message));
+
+            StopButton.Click += (o, s) =>
+            {
+                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
+
+                try
+                {
+                    if (selected.CanStop || selected != null)
+                    {
+                        selected.Stop();
+                    }
+                }
+                catch (Win32Exception win32Exception)
+                {
+                    TextBlock.Text = "Problemas ao interromper o serviço: " + win32Exception.Message;
+                }
+            };
+
+            RestartButton.Click += (o, s) =>
+            {
+                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
+
+                if (selected.CanPauseAndContinue)
+                {
+                    selected.Pause();
+                    selected.Continue();
+                }else if (!selected.CanStop)
+                {
+                    try
+                    {
+                        selected.Start();
+                    }
+                    catch (InvalidOperationException exception)
+                    {
+                        TextBlock.Text = exception.Message;
+                    }
+                }
+                else
+                {
+                    RestartService(selected);
+                    TextBlock.Text = "Reiniciando Serviço";
+                }
+            };
+        }
+
+        private void IsAdministrator()
+        {
             var wi = WindowsIdentity.GetCurrent();
             var wp = new WindowsPrincipal(wi);
 
@@ -60,61 +120,7 @@ namespace AgilusLogger
 
                 // Shut down the current process
                 Application.Current.Shutdown();
-            }
-            else
-            {
-                // We are running as administrator
-               
-            }
-
-
-            _manager = new ServiceManager(1000000);
-            _manager.OnServiceListUpdated += (o, s) => ListView.ItemsSource = _manager.Loggers;
-            InstallButton.Click += InstallButton_Click;
-            UninstallButton.Click += UninstallButton_Click;
-            ListView.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
-            ListView.ItemsSource = _manager.Loggers;
-            CancelButton.Click += (o, s) => Tab.SelectedItem = InfoTab;
-            NewButton.Click += (o, s) => Tab.SelectedItem = ConfigTab;
-            OnExit += (o, s) => CurrentDispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => TextBlock.Text = s.Message));
-
-            StopButton.Click += (o, s) =>
-            {
-                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
-
-                if (selected != null && selected.CanStop)
-                {
-                    selected.Stop();
-                }
-            };
-
-            RestartButton.Click += (o, s) =>
-            {
-                var selected = ListView?.Items.GetItemAt(ListView.SelectedIndex) as LoggerService;
-
-                if (selected.CanPauseAndContinue && selected != null)
-                {
-                    selected.Pause();
-                    selected.Continue();
-                }
-
-                if (!selected.CanStop)
-                {
-                    try
-                    {
-                        selected.Start();
-                    }
-                    catch (InvalidOperationException exception)
-                    {
-                        TextBlock.Text = exception.Message;
-                    }
-                }
-                else
-                {
-                    RestartService(selected);
-                    TextBlock.Text = "Parando Serviço";
-                }
-            };
+            }            
         }
 
         private async void RestartService(LoggerService selected)
@@ -123,50 +129,6 @@ namespace AgilusLogger
             await Task.Run(() => selected.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Stopped));
             selected.Start();
             TextBlock.Text = "Serviço Reiniciado";
-        }
-
-        private bool IsRunAsAdministrator()
-        {
-            var wi = WindowsIdentity.GetCurrent();
-            var wp = new WindowsPrincipal(wi);
-            return wp.IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
-        private  void OnStartup(object sender, StartupEventArgs e)
-        {
-            if (!IsRunAsAdministrator())
-            {
-                // It is not possible to launch a ClickOnce app as administrator directly, so instead we launch the
-                // app as administrator in a new process.
-
-                var processInfo = new ProcessStartInfo(Assembly.GetExecutingAssembly().CodeBase);
-
-                // The following properties run the new process as administrator
-                processInfo.UseShellExecute = true;
-                processInfo.Verb = "runas";
-
-                // Start the new process
-
-                try
-                {
-                    Process.Start(processInfo);
-                }
-                catch (Exception)
-                {
-                    // The user did not allow the application to run as administrator
-                    MessageBox.Show("Sorry, this application must be run as Administrator.");
-                }
-
-                // Shut down the current process
-                Application.Current.Shutdown();
-            }
-
-            else
-            {
-                // We are running as administrator
-                // Do normal startup stuff...
-            }
-
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
@@ -191,8 +153,7 @@ namespace AgilusLogger
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
-            SetupNode(NodeAction.Install, ServiceNameField.Text, ServicePortField.Text);
-            TextBlock.Text = "Instalando";
+            SetupNode(NodeAction.Install, ServiceNameField.Text, ServicePortField.Text);            
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -207,12 +168,9 @@ namespace AgilusLogger
         {
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-        }
 
-        private void TextStatus_TextChanged(object sender, TextChangedEventArgs e)
-        {
         }
     }
 }
