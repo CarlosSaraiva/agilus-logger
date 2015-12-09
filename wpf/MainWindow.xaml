@@ -20,7 +20,7 @@
             </ListView.View>
         </ListView>
         <TabControl x:Name="Tab" Margin="392,0,0,0" VerticalAlignment="Top" SelectionChanged="tab_SelectionChanged" Height="422" Background="#FFB6ACAC" BorderBrush="#FFAE9A9A" HorizontalAlignment="Left" Width="352">
-            <TabItem x:Name="InfoTab" Header="TabItem" Visibility="Visible">
+            <TabItem x:Name="InfoTab" Header="TabItem" Visibility="Hidden">
                 <Grid Margin="0,-3,-12,-16" IsManipulationEnabled="True" Height="422" VerticalAlignment="Top">
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" />
