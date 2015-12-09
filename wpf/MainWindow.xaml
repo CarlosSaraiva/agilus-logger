@@ -1,7 +1,7 @@
 ﻿<Window x:Class="AgilusLogger.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Agilus Logger" Height="511.219" Width="766.834" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" SnapsToDevicePixels="True" WindowStyle="ThreeDBorderWindow" Icon="pen.ico">
+        Title="Agilus Logger" Height="511.219" Width="766.834" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Cursor="Arrow" SnapsToDevicePixels="True" WindowStyle="ThreeDBorderWindow" Icon="Assets/pen.ico">
 
     <Grid Margin="0,0,11,36" Height="438" VerticalAlignment="Bottom">
         <ListView x:Name="ListView" HorizontalAlignment="Left" Margin="10,22,0,10" Width="382" RenderTransformOrigin="0.1,-0.74" SelectionChanged="listView_SelectionChanged" Foreground="#CC042271" SelectionMode="Single" IsTextSearchCaseSensitive="True" UseLayoutRounding="True">
@@ -19,9 +19,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TabControl x:Name="Tab" Margin="397,-1,0,0" VerticalAlignment="Top" SelectionChanged="tab_SelectionChanged" Height="429" Background="#FFB6ACAC" BorderBrush="#FFAE9A9A" HorizontalAlignment="Left" Width="353">
-            <TabItem x:Name="InfoTab" Header="TabItem" Visibility="Hidden">
-                <Grid Margin="-11,-3,-1,-16" IsManipulationEnabled="True" Height="422" VerticalAlignment="Top">
+        <TabControl x:Name="Tab" Margin="392,0,0,0" VerticalAlignment="Top" SelectionChanged="tab_SelectionChanged" Height="422" Background="#FFB6ACAC" BorderBrush="#FFAE9A9A" HorizontalAlignment="Left" Width="352">
+            <TabItem x:Name="InfoTab" Header="TabItem" Visibility="Visible">
+                <Grid Margin="0,-3,-12,-16" IsManipulationEnabled="True" Height="422" VerticalAlignment="Top">
                     <Grid.Background>
                         <SolidColorBrush Color="#FFE5E5E5" />
                     </Grid.Background>
@@ -30,15 +30,15 @@
                     </Grid.ColumnDefinitions>
                     <Grid Margin="10,171,261,208"/>
                     <Grid Margin="131,171,180,208"/>
-                    <Button x:Name="UninstallButton" Content="Uninstall" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="237,171,0,0" Width="98" Background="#FF575361" />
-                    <Button x:Name="InstallButton" Content="Install" Margin="255,60,0,319" VerticalAlignment="Center" Background="#FF555455" VerticalContentAlignment="Center" ToolTip="Instala um novo serviço." HorizontalAlignment="Left" Width="80" />
-                    <TextBlock x:Name="TextBlock" Margin="30,267,0,40" TextWrapping="Wrap" HorizontalAlignment="Left" Width="281" />
-                    <Label Content="Nome:" HorizontalAlignment="Left" Margin="20,37,0,0" VerticalAlignment="Top" Height="26" Width="45" />
-                    <TextBox x:Name="ServiceNameField" HorizontalAlignment="Left" Height="23" Margin="94,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" ToolTip="Digite o nome para o serviço." TabIndex="0" />
-                    <Label Content="Porta:&#xA;" HorizontalAlignment="Left" Margin="20,77,0,0" VerticalAlignment="Top" Width="45" Height="27" />
-                    <TextBox x:Name="ServicePortField" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="94,81,0,0" TabIndex="1" ToolTip="Digite a porta a qual o serviço será instalado." />
-                    <Button x:Name="RestartButton" Content="Restart" Background="#FF555555" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="84" Margin="131,0,0,219" />
-                    <Button x:Name="StopButton" Content="Stop" UseLayoutRounding="False" Background="#FF636068" Click="StopButton_Click" VerticalAlignment="Bottom" Margin="20,0,251,219" />
+                    <Button x:Name="UninstallButton" Content="Uninstall" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="237,245,0,0" Width="98" Background="#FF575361" />
+                    <Button x:Name="InstallButton" Content="Install" Margin="11,98,0,292" VerticalAlignment="Center" Background="#FF555455" VerticalContentAlignment="Center" ToolTip="Instala um novo serviço." HorizontalAlignment="Left" Width="86" />
+                    <TextBlock x:Name="TextBlock" Margin="21,313,0,27" TextWrapping="Wrap" HorizontalAlignment="Left" Width="314" />
+                    <Label Content="Nome:" HorizontalAlignment="Left" Margin="21,16,0,0" VerticalAlignment="Top" Height="26" Width="45" />
+                    <TextBox x:Name="ServiceNameField" HorizontalAlignment="Left" Height="23" Margin="81,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" ToolTip="Digite o nome para o serviço." TabIndex="0" />
+                    <Label Content="Porta:&#xA;" HorizontalAlignment="Left" Margin="20,47,0,0" VerticalAlignment="Top" Width="45" Height="27" />
+                    <TextBox x:Name="ServicePortField" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="81,44,0,0" TabIndex="1" ToolTip="Digite a porta a qual o serviço será instalado." />
+                    <Button x:Name="RestartButton" Content="Restart" Background="#FF555555" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="84" Margin="131,0,0,145" />
+                    <Button x:Name="StopButton" Content="Stop" UseLayoutRounding="False" Background="#FF636068" Click="StopButton_Click" VerticalAlignment="Bottom" Margin="20,0,251,145" />
                 </Grid>
             </TabItem>
         </TabControl>

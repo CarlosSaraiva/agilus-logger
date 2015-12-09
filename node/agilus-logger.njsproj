@@ -23,7 +23,6 @@
     <Content Include="build\logger\install.cmd" />
     <Content Include="build\logger\package.json" />
     <Content Include="build\logger\uninstall.cmd" />
-    <Content Include="build\service\agilus.udl" />
     <Content Include="package.json" />
     <Compile Include="build\service\agilus-logger.js" />
     <Compile Include="build\logger\install.js" />
